@@ -3,16 +3,16 @@
 
 
     pytest示范脚本！ 
-        ├── Page
-        ├── PageObject
-        ├── TestCase
-        ├── __pycache__
-        ├── config
-        ├── conftest.py
-        ├── data
-        ├── screenshot
-        ├── utils
-        ├── README.md
-        ├── runcase.py
-        ├── report.html
-        └── venv
+        ├── config              ——配置文件
+        ├── data                ——数据文件
+        ├── Page                ——selenium基类
+        ├── PageObject          ——POM设计模式
+        ├── screenshot          ——截图目录
+        ├── TestCase            ——测试用例
+        ├── utils               ——常用第三方类
+        ├── conftest.py         ——pytest胶水文件
+        ├── README.md           ——自述文件
+        ├── report.html         ——报告文件
+        ├── runcase.py          ——总执行文件
+        ├── requirements.txt    ——项目依赖库
+        └── venv                ——虚拟环境

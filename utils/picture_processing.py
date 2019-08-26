@@ -30,6 +30,7 @@ class Picture:
         h2 = image2.histogram()
 
         result = math.sqrt(reduce(operator.add, list(map(lambda a, b: (a - b) ** 2, h1, h2))) / len(h1))
+        print(result)
         return result == 0.0
 
 

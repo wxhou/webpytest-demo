@@ -39,7 +39,8 @@ class WebPage:
             'css': By.CSS_SELECTOR,
             'xpath': By.XPATH,
             'name': By.NAME,
-            'id': By.ID
+            'id': By.ID,
+            'link_text': By.LINK_TEXT
         }  # 元素定位的类型
 
         # self.driver = webdriver.Chrome()

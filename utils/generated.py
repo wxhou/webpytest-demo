@@ -13,49 +13,65 @@ class Generator:
 
     @property
     def mobile_number(self):
-        return faker.phone_number()  # 手机号
+        '''手机号'''
+        return faker.phone_number()
 
     @property
     def ID_card(self):
-        return faker.ssn(min_age=1, max_age=90)  # 身份证
+        '''身份证'''
+        return faker.ssn(min_age=1, max_age=90)
 
     @property
     def image(self):
-        return faker.image_url()  # 图片网址
+        '''图片网址'''
+        return faker.image_url()
 
     @property
     def word(self):
-        return faker.word()  # 随机单词
+        '''随机单词'''
+        return faker.word()
 
     @property
     def license_plate(self):
-        return faker.license_plate()  # 车牌号
+        '''车牌号'''
+        return faker.license_plate()
 
     @property
     def address(self):
-        return faker.address()  # 随机地址
+        ''' 随机地址'''
+        return faker.address()
 
     @property
     def randomdate(self):
-        return faker.date(pattern="%Y-%m-%d")  # 随机日期（可自定义格式）
+        '''随机日期（可自定义格式）'''
+        return faker.date(pattern="%Y-%m-%d")
 
     @property
     def randomtime(self):
-        return faker.time(pattern="%H:%M")  # 随机时间（可自定义格式）
+        '''随机时间（可自定义格式）'''
+        return faker.time(pattern="%H:%M")
 
     @property
     def name(self):
-        return faker.name()  # 生成名字
+        '''生成名字'''
+        return faker.name()
 
     @property
     def screen_name(self):
+        '''截图名称'''
         screen_name = os.path.join(root_dir, 'screenshot', '%s.png' % self.now_time)
         return screen_name
 
     @property
     def now_time(self):
-        return time.strftime("%Y%m%d_%H%M%f",time.localtime(time.time()))
+        '''现在的时间'''
+        return time.strftime("%Y%m%d_%H%M%S", time.localtime(time.time()))
+
+    @property
+    def time_line(self):
+        '''删除的时间线'''
+        return time.time() - 7 * 24 * 3600
 
 
 if __name__ == '__main__':
-    print(Generator().screen_name)
+    print(Generator().time_line)

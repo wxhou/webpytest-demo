@@ -2,6 +2,7 @@
 # coding=utf-8
 import os
 import configparser
+from pprint import pprint
 
 root_dir = os.path.abspath(os.path.dirname(os.path.dirname(__file__)))
 # 如果可以，请不要在root_dir中使用os.getcwd()
@@ -13,7 +14,7 @@ class Config:
     def __init__(self):
         self.config = configparser.ConfigParser()
         # with open(config_path,'r') as f:
-        self.config.read(config_path)
+        self.config.read(config_path, encoding='utf-8')
 
     @property
     def url(self):
@@ -51,7 +52,7 @@ class Element:
 
     def __init__(self):
         self.element = configparser.ConfigParser()
-        self.element.read(element_path)
+        self.element.read(element_path, encoding='utf-8')
 
     def __call__(self, *args, **kwargs):
         return self.element.get(*args)
@@ -62,5 +63,5 @@ class Element:
 
 
 if __name__ == '__main__':
-    conf = Config()
-    print(conf.url)
+    conf = Element()
+    pprint(conf.zentao)
