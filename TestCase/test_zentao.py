@@ -27,7 +27,8 @@ class TestZenTao:
     def test_001(self, drivers):
         """添加产品"""
         zentao = ZenTao(drivers)
-        zentao.add_product('你好','123')
+        zentao.add_product('你好', '123')
+
 
 if __name__ == '__main__':
     pytest.main(['-vv', 'test_zentao.py'])

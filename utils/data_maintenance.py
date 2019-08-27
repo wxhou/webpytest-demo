@@ -8,6 +8,8 @@ gen = Generator()
 
 
 class Maintenance:
+    """数据维护"""
+
     def __init__(self):
         self.screen = os.path.join(root_dir, 'screenshot')
         if not os.path.exists(self.screen):

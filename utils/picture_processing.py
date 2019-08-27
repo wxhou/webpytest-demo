@@ -8,6 +8,8 @@ from functools import reduce
 
 
 class Picture:
+    """图像处理"""
+
     def picture_interception(self, locator, path):
         """图像裁剪"""
         print("需要截图的元素坐标%s" % locator.location)

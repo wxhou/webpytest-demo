@@ -39,6 +39,5 @@ class ZenTaoLogin(WebPage):
         self.is_click(element('zentao', '退出'))
 
 
-
 if __name__ == '__main__':
     pass

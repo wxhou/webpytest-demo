@@ -8,6 +8,8 @@ db_path = os.path.join(root_dir, 'data', 'sqlite3')
 
 
 class SQLite:
+    """数据库"""
+
     def __init__(self):
         self.con = sqlite3.connect(db_path)
         self.cur = self.con.cursor()

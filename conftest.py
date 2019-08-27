@@ -48,7 +48,7 @@ def pytest_runtest_makereport(item):
 
 @pytest.mark.optionalhook
 def pytest_html_results_table_header(cells):
-    cells.insert(1, html.th('Description'))
+    cells.insert(1, html.th('用例名称'))
     cells.insert(2, html.th('Test_nodeid'))
     cells.pop(2)
 
@@ -58,6 +58,13 @@ def pytest_html_results_table_row(report, cells):
     cells.insert(1, html.td(report.description))
     cells.insert(2, html.td(report.nodeid))
     cells.pop(2)
+
+
+@pytest.mark.optionalhook
+def pytest_html_results_table_html(report, data):
+    if report.passed:
+        del data[:]
+        data.append(html.div('未捕获日志输出.', class_='empty log'))
 
 
 def _capture_screenshot():

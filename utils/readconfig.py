@@ -11,6 +11,8 @@ element_path = os.path.join(root_dir, 'config', 'element.ini')
 
 
 class Config:
+    """配置文件"""
+
     def __init__(self):
         self.config = configparser.ConfigParser()
         # with open(config_path,'r') as f:

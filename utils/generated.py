@@ -10,6 +10,7 @@ root_dir = os.path.abspath(os.path.dirname(os.path.dirname(__file__)))
 
 
 class Generator:
+    """数据生成"""
 
     @property
     def mobile_number(self):
