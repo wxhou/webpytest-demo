@@ -1,12 +1,13 @@
 #!/usr/bin/env python3
-from selenium.webdriver.support.ui import WebDriverWait
+# coding=utf-8
 from selenium.webdriver.common.action_chains import ActionChains
 from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support.select import Select
+from utils.picture_processing import Picture
 from selenium.webdriver.common.by import By
 from selenium.common.exceptions import *
-from utils.picture_processing import Picture
 from selenium import webdriver
-from PIL import Image
 import time
 
 # driver = webdriver.Chrome()
@@ -19,16 +20,6 @@ def sleep(seconds=1):
     :return 有些提示框不强制等待，只用显式等待会导致执行报错
     '''
     time.sleep(seconds)
-
-    # def get_url(url, driver):
-    #     '''打开网址并验证'''
-    #     driver.set_page_load_timeout(60)
-    #     try:
-    #         driver.maximize_window()
-    #         driver.get(url)
-    #     except TimeoutException:
-    #         raise ("打开%s超时请检查网络或网址服务器" % url)
-    #     assert EC.url_to_be(url)(driver), "地址不正确，应为%s，实为%s" % (url, driver.current_url)
 
 
 class WebPage:
@@ -59,13 +50,13 @@ class WebPage:
                 else:
                     element = func(self.locate_mode[pattern], value)
             except InvalidElementStateException:
-                print("元素%s，清除输入框内容失败，用户不可编辑" % value)
+                print("元素%s，清除输入框内容失败，用户不可编辑" % locator)
                 return
             except NoSuchElementException:
-                print('当前页面没有找到元素%s' % value)
+                print('当前页面没有找到元素%s' % locator)
                 return
             except TimeoutException:
-                print('查找元素%s超时' % value)
+                print('查找元素%s超时' % locator)
                 return
             except Exception as e:
                 raise e
@@ -81,6 +72,7 @@ class WebPage:
 
     def get_url(self, url):
         '''打开网址并验证'''
+        self.driver.set_page_load_timeout(60)
         try:
             self.driver.get(url)
         except TimeoutException:
@@ -225,12 +217,32 @@ class WebPage:
         ele = self.findelement(locator, number)
         self.driver.execute_script("arguments[0].focus();", ele)
 
+    def click_drop_down(self, selectlocator, selectnumber=None,
+                        optionlocator=None, optionnumber=None, ):
+        """封装两次点击"""
+        self.is_click(selectlocator, selectnumber)
+        self.is_click(optionlocator, optionnumber)
+
+    def select_drop_down(self, locator, number=None,
+                         index=None, value=None, text=None):
+        """选择下拉框"""
+        ele = self.findelement(locator, number)
+        sleep(2)
+        # 这里一定要加等待时间，否则会引起如下报错
+        # Element is not currently visible and may not be manipulated
+        if value:
+            Select(ele).select_by_index(index)
+        elif index:
+            Select(ele).select_by_value(value)
+        elif text:
+            Select(ele).select_by_visible_text(text)
+
     def getSource(self):
         """获取页面源代码"""
         return self.driver.page_source
 
     def shot_file(self, path):
-        '''base64截图'''
+        '''文件截图截图'''
         return self.driver.save_screenshot(path)
 
     def close(self):

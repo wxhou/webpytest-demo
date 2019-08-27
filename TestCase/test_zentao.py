@@ -24,10 +24,16 @@ class TestZenTao:
         yield
         login.quit_login()
 
+    @pytest.mark.skip
     def test_001(self, drivers):
         """添加产品"""
         zentao = ZenTao(drivers)
         zentao.add_product('你好', '123')
+
+    def test_002(self, drivers):
+        """添加BUG"""
+        zentao = ZenTao(drivers)
+        zentao.add_bug()
 
 
 if __name__ == '__main__':

@@ -12,7 +12,7 @@ def drivers(request):
     global driver
     if driver is None:
         driver = webdriver.Chrome()
-
+        driver.maximize_window()
     def fn():
         print("当全部用例执行完之后：quit driver！")
         driver.quit()

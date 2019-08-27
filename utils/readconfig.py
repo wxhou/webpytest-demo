@@ -14,7 +14,8 @@ class Config:
     """配置文件"""
 
     def __init__(self):
-        self.config = configparser.ConfigParser()
+        self.config = configparser.RawConfigParser()
+        # 当有%的符号时请使用Raw读取
         # with open(config_path,'r') as f:
         self.config.read(config_path, encoding='utf-8')
 
@@ -53,7 +54,7 @@ class Element:
     """获取元素"""
 
     def __init__(self):
-        self.element = configparser.ConfigParser()
+        self.element = configparser.RawConfigParser()
         self.element.read(element_path, encoding='utf-8')
 
     def __call__(self, *args, **kwargs):
