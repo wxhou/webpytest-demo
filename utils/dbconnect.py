@@ -4,7 +4,7 @@ import os
 import sqlite3
 
 root_dir = os.path.abspath(os.path.dirname(os.path.dirname(__file__)))
-db_path = os.path.join(root_dir, 'data', 'sqlite3')
+db_path = os.path.join(root_dir, 'data', 'sqlite3.sqlite')
 
 
 class SQLite:

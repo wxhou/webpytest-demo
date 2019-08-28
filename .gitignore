@@ -41,9 +41,10 @@ htmlcov/
 .cache
 nosetests.xml
 demo.py
-coverage.xml
+*.xml
+*.html
 *,cover
-
+.pytest_cache/
 # Translations
 *.mo
 *.pot
@@ -56,3 +57,7 @@ docs/_build/
 
 # PyBuilder
 target/
+.DS_Store
+# picture
+*.png
+*.json

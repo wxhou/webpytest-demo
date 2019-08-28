@@ -35,4 +35,5 @@ class ZenTao(WebPage):
         self.click_drop_down(selectlocator=element('zentao', '当前指派'),
                              optionlocator=element('zentao', '选项'),
                              optionnumber=2)
-        sleep(5)
+        self.click_drop_down(selectlocator=element('zentao','影响版本'),optionlocator=element('zentao','选项'),
+                             optionnumber=1)
