@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
 # coding=utf-8
+import sys
+sys.path.append('.')
 from selenium.webdriver.common.action_chains import ActionChains
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
@@ -65,11 +67,6 @@ class WebPage:
         else:
             raise ('element type is not "CSS"')
 
-    def title(self, text):
-        title = EC.title_is(text)
-        _title1 = self.driver.title
-        assert title(self.driver), "title不正确，应为%s，实为%s" % (text, _title1)
-
     def get_url(self, url):
         '''打开网址并验证'''
         self.driver.set_page_load_timeout(60)
@@ -77,13 +74,12 @@ class WebPage:
             self.driver.get(url)
         except TimeoutException:
             raise ("打开%s超时请检查网络或网址服务器" % url)
-        # self.title("")
-        assert EC.url_to_be(url)(self.driver), "地址不正确，应为%s，实为%s" % (url, self.driver.current_url)
+        assert EC.url_contains(url)(self.driver), "地址包含关系不正确，应为%s，实为%s" % (url, self.driver.current_url)
 
     def Assert_title(self, text):
-        title = EC.title_is(text)
-        _title1 = self.driver.title
-        assert title(self.driver), "title不正确，应为%s，实为%s" % (text, _title1)
+        title1 = EC.title_is(text)
+        title2 = self.driver.title
+        assert title1(self.driver), "title不正确，应为%s，实为%s" % (text, title2)
 
     def findelement(self, locator, number=None):
         """寻找单个元素"""

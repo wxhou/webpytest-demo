@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
 # coding=utf-8
+import sys
+sys.path.append('.')
 from Page.webpage import WebPage, sleep
 from utils.readconfig import Element
 
@@ -10,7 +12,7 @@ class ZenTao(WebPage):
     def login(self, usr, pwd):
         self.input_text(element('zentao', '账号'), text=usr)
         self.input_text(element('zentao', '密码'), text=pwd)
-        self.is_click(element('zentao', '登录'))
+        self.is_click(element('zentao', '提交'))
 
     def keeplogin(self):
         self.is_click(element('zentao', '保持登录'))

@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 # coding=utf-8
-import os
+import os,sys
+sys.path.append('.')
 import sqlite3
 
 root_dir = os.path.abspath(os.path.dirname(os.path.dirname(__file__)))

@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 # coding=utf-8
+import sys
 import pytest
 from PageObject.zentaopage import ZenTao
 from utils.readconfig import Config

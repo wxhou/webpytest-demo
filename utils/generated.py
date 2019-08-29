@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 # coding=utf-8
-import os
+import os,sys
+sys.path.append('.')
 import time
 from datetime import datetime
 from faker import Factory
