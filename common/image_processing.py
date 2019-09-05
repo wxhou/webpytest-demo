@@ -27,7 +27,7 @@ class Picture:
         im.save(path)
         time.sleep(1)
 
-    def ImageContrast(self, img1, img2):
+    def image_contrast(self, img1, img2):
         """图像对比算法"""
         image1 = Image.open(img1)
         image2 = Image.open(img2)
@@ -39,6 +39,8 @@ class Picture:
         log.info("对比结果为%s" % result)
         return result == 0.0
 
+
+pic = Picture()
 
 if __name__ == '__main__':
     pass

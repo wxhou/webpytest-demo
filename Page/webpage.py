@@ -7,15 +7,15 @@ from selenium.webdriver.common.action_chains import ActionChains
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support.select import Select
-from common.picture_processing import Picture
 from selenium.webdriver.common.by import By
 from selenium.common.exceptions import *
+from common.image_processing import pic
 from selenium import webdriver
 from utils.log import log
 import time
 
+
 # driver = webdriver.Chrome()
-pic = Picture()
 
 
 def sleep(seconds=1):
@@ -68,7 +68,7 @@ class WebPage:
             else:
                 return element
         else:
-            raise ('element type is not "CSS"')
+            raise TypeError('element type is not "CSS"')
 
     def get_url(self, url):
         '''打开网址并验证'''

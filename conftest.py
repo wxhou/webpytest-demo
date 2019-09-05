@@ -3,6 +3,7 @@
 import pytest
 from py._xmlgen import html
 from selenium import webdriver
+from common.readconfig import conf
 
 driver = None
 
@@ -11,8 +12,12 @@ driver = None
 def drivers(request):
     global driver
     if driver is None:
-        driver = webdriver.Chrome()
+        if conf.browser == 'Chrome':
+            driver = webdriver.Chrome()
+        elif conf.browser == "Firefox":
+            driver = webdriver.Firefox()
         driver.maximize_window()
+
     def fn():
         print("当全部用例执行完之后：quit driver！")
         driver.quit()

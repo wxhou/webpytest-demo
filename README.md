@@ -2,6 +2,12 @@
 
 
 >pytest+selenium示范脚本！ 
+
+
+#### 使用yaml管理测试用例
+
+
+
 ---
         ├── config              ——配置文件
         ├── data                ——数据文件

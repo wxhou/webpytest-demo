@@ -4,16 +4,17 @@ import os, sys
 
 sys.path.append('.')
 import configparser
-from pprint import pprint
 
 root_dir = os.path.abspath(os.path.dirname(os.path.dirname(__file__)))
 # 如果可以，请不要在root_dir中使用os.getcwd()
 config_path = os.path.join(root_dir, 'data', 'config.ini')
-element_path = os.path.join(root_dir, 'data', 'element.ini')
 
 
 class Config:
     """配置文件"""
+    BROWSER = 'browser'
+    HOST = 'host'
+    REMOTE = 'remote'
 
     def __init__(self):
         self.config = configparser.RawConfigParser()
@@ -21,54 +22,32 @@ class Config:
         self.config.read(config_path, encoding='utf-8')
 
     @property
+    def browser(self):
+        return self.config.get(self.BROWSER.upper(), self.BROWSER.lower()).title()
+
+    @property
     def url(self):
-        return self.config.get('webserver', 'url')
+        return self.config.get(self.HOST.upper(), self.HOST.lower())
 
     @url.setter
     def url(self, value):
-        self.config.set('server', 'url', value)
+        self.config.set(self.HOST.upper(), self.HOST.lower(), value)
         with open(config_path, 'w') as f:
             self.config.write(f)
 
     @property
-    def remote_state(self):
-        return self.config.get('remote', 'state')
+    def remote(self):
+        return self.config.get(self.REMOTE.upper(), self.REMOTE.lower())
 
-    @remote_state.setter
-    def remote_state(self, value):
-        self.config.set('remote', 'state', value)
+    @remote.setter
+    def remote(self, value):
+        self.config.set(self.REMOTE.upper(), self.REMOTE.lower(), value)
         with open(config_path, 'w') as f:
             self.config.write(f)
-
-    @property
-    def remote_url(self):
-        return self.config.get('remote', 'state')
-
-    @remote_url.setter
-    def remote_url(self, value):
-        self.config.set('remote', 'state', value)
-        with open(config_path, 'w') as f:
-            self.config.write(f)
-
-
-class Element:
-    """获取元素"""
-
-    def __init__(self):
-        self.element = configparser.RawConfigParser()
-        self.element.read(element_path, encoding='utf-8')
-
-    def __call__(self, *args, **kwargs):
-        return self.element.get(*args)
-
-    def __getattr__(self, item):
-        sections = self.element.items(item)
-        return sections
 
 
 conf = Config()
-element = Element()
 
 if __name__ == '__main__':
-    conf = Element()
-    pprint(conf.zentao)
+    conf = Config()
+    print(conf.browser)
