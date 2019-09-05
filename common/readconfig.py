@@ -1,14 +1,15 @@
 #!/usr/bin/env python3
 # coding=utf-8
-import os,sys
+import os, sys
+
 sys.path.append('.')
 import configparser
 from pprint import pprint
 
 root_dir = os.path.abspath(os.path.dirname(os.path.dirname(__file__)))
 # 如果可以，请不要在root_dir中使用os.getcwd()
-config_path = os.path.join(root_dir, 'config', 'config.ini')
-element_path = os.path.join(root_dir, 'config', 'element.ini')
+config_path = os.path.join(root_dir, 'data', 'config.ini')
+element_path = os.path.join(root_dir, 'data', 'element.ini')
 
 
 class Config:
@@ -17,7 +18,6 @@ class Config:
     def __init__(self):
         self.config = configparser.RawConfigParser()
         # 当有%的符号时请使用Raw读取
-        # with open(config_path,'r') as f:
         self.config.read(config_path, encoding='utf-8')
 
     @property
@@ -65,6 +65,9 @@ class Element:
         sections = self.element.items(item)
         return sections
 
+
+conf = Config()
+element = Element()
 
 if __name__ == '__main__':
     conf = Element()

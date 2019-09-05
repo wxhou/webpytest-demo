@@ -1,15 +1,17 @@
 #!/usr/bin/env python3
 # coding=utf-8
 import sys
+
 sys.path.append('.')
 from selenium.webdriver.common.action_chains import ActionChains
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support.select import Select
-from utils.picture_processing import Picture
+from common.picture_processing import Picture
 from selenium.webdriver.common.by import By
 from selenium.common.exceptions import *
 from selenium import webdriver
+from utils.log import log
 import time
 
 # driver = webdriver.Chrome()
@@ -52,16 +54,17 @@ class WebPage:
                 else:
                     element = func(self.locate_mode[pattern], value)
             except InvalidElementStateException:
-                print("元素%s，清除输入框内容失败，用户不可编辑" % locator)
+                log.exception("元素%s，清除输入框内容失败，用户不可编辑" % locator)
                 return
             except NoSuchElementException:
-                print('当前页面没有找到元素%s' % locator)
+                log.exception('当前页面没有找到元素%s' % locator)
                 return
             except TimeoutException:
-                print('查找元素%s超时' % locator)
+                log.exception('查找元素%s超时' % locator)
                 return
             except Exception as e:
-                raise e
+                log.exception(format(e))
+                raise
             else:
                 return element
         else:
@@ -71,12 +74,15 @@ class WebPage:
         '''打开网址并验证'''
         self.driver.set_page_load_timeout(60)
         try:
+            log.info("打开网址%s" % url)
             self.driver.get(url)
         except TimeoutException:
-            raise ("打开%s超时请检查网络或网址服务器" % url)
+            log.exception("打开%s超时请检查网络或网址服务器" % url)
+            raise
         assert EC.url_contains(url)(self.driver), "地址包含关系不正确，应为%s，实为%s" % (url, self.driver.current_url)
 
     def Assert_title(self, text):
+        """验证头部文字"""
         title1 = EC.title_is(text)
         title2 = self.driver.title
         assert title1(self.driver), "title不正确，应为%s，实为%s" % (text, title2)
@@ -181,7 +187,7 @@ class WebPage:
         try:
             self.driver.switch_to.default_content()
         except Exception as e:
-            print(format(e))
+            log.exception(format(e))
 
     def switchWindowshandle(self):
         '''切换最新的标签'''
@@ -192,12 +198,12 @@ class WebPage:
         for i in range(3, 0, -1):
             try:
                 assert now_handle1 != now_handle2
-                print('切换新标签成功！%s' % self.driver.title)
+                log.info('切换新标签成功！%s' % self.driver.title)
                 break
             except AssertionError:
-                print("切换标签失败！正在重试，还有%d机会！" % i)
+                log.exception("切换标签失败！正在重试，还有%d机会！" % i)
         else:
-            print("切换标签失败!请检查！")
+            log.error("切换标签失败!请检查！")
 
     def screenshots_of_element(self, locator, number=None, screenshot_path=None):
         '''对某个元素进行截图,并返回截图路径'''

@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 # coding=utf-8
-import os,sys
+import os, sys
+
 sys.path.append('.')
 import time
 from datetime import datetime
@@ -67,7 +68,7 @@ class Generator:
     @property
     def now_time(self):
         '''现在的时间'''
-        return time.strftime("%Y%m%d_%H%M%S", time.localtime(time.time()))
+        return datetime.now().strftime("%Y%m%d_%H%M%S")
 
     @property
     def time_line(self):
@@ -75,5 +76,7 @@ class Generator:
         return time.time() - 7 * 24 * 3600
 
 
+generator = Generator()
+
 if __name__ == '__main__':
-    print(Generator().time_line)
+    print(generator.now_time)

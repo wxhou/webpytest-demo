@@ -1,11 +1,10 @@
 #!/usr/bin/env python3
 # coding=utf-8
 import sys
+
 sys.path.append('.')
 from Page.webpage import WebPage, sleep
-from utils.readconfig import Element
-
-element = Element()
+from common.readconfig import element
 
 
 class ZenTao(WebPage):
@@ -30,12 +29,6 @@ class ZenTao(WebPage):
         self.is_click(element('zentao', '保存'))
         sleep(5)
 
-    def add_bug(self):
-        self.is_click(element('zentao', '测试'))
-        self.is_click(element('zentao', 'bug'))
-        self.is_click(element('zentao', '提bug'))
-        self.click_drop_down(selectlocator=element('zentao', '当前指派'),
-                             optionlocator=element('zentao', '选项'),
-                             optionnumber=2)
-        self.click_drop_down(selectlocator=element('zentao','影响版本'),optionlocator=element('zentao','选项'),
-                             optionnumber=1)
+
+if __name__ == '__main__':
+    pass

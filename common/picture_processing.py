@@ -1,12 +1,14 @@
 #!/usr/bin/env python3
 # coding=utf-8
 import sys
+
 sys.path.append('.')
 import math
 import time
 import operator
 from PIL import Image
 from functools import reduce
+from utils.log import log
 
 
 class Picture:
@@ -14,8 +16,8 @@ class Picture:
 
     def picture_interception(self, locator, path):
         """图像裁剪"""
-        print("需要截图的元素坐标%s" % locator.location)
-        print("需要截图的元素大小%s" % locator.size)
+        log.warning("需要截图的元素坐标%s" % locator.location)
+        log.warning("需要截图的元素大小%s" % locator.size)
         shot = (locator.location['x'],
                 locator.location['y'],
                 locator.location['x'] + locator.size['width'],
@@ -34,7 +36,7 @@ class Picture:
         h2 = image2.histogram()
 
         result = math.sqrt(reduce(operator.add, list(map(lambda a, b: (a - b) ** 2, h1, h2))) / len(h1))
-        print(result)
+        log.info("对比结果为%s" % result)
         return result == 0.0
 
 

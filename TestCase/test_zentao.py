@@ -1,23 +1,25 @@
 #!/usr/bin/env python3
 # coding=utf-8
 import sys
+
 sys.path.append('.')
 import pytest
 from PageObject.zentaopage import ZenTao
+from common.readconfig import conf
 
 
 class TestZenTao:
+    @pytest.fixture(scope='class', autouse=True)
+    def login(self, drivers):
+        login = ZenTao(drivers)
+        login.get_url(conf.url)
+        login.login('hoou', 'Hoou1993')
 
     def test_001(self, drivers):
         """添加产品"""
         zentao = ZenTao(drivers)
         zentao.add_product('你好', '123')
 
-    def test_002(self, drivers):
-        """添加BUG"""
-        zentao = ZenTao(drivers)
-        zentao.add_bug()
-
 
 if __name__ == '__main__':
-    pytest.main(['-vv', 'test_zentao.py'])
+    pytest.main(['-v', 'test_zentao.py'])

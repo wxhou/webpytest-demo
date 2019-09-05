@@ -1,8 +1,8 @@
 # webpytest-demo
 
 
-
-    pytest示范脚本！ 
+>pytest+selenium示范脚本！ 
+---
         ├── config              ——配置文件
         ├── data                ——数据文件
         ├── Page                ——selenium基类
@@ -16,3 +16,5 @@
         ├── runcase.py          ——总执行文件
         ├── requirements.txt    ——项目依赖库
         └── venv                ——虚拟环境
+        
+      
