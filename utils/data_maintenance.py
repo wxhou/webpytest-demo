@@ -1,11 +1,11 @@
 #!/usr/bin/env python3
 # coding=utf-8
-import os,sys
+import os, sys
+
 sys.path.append('.')
-from utils.generated import Generator
+from utils.generated import generator
 
 root_dir = os.path.abspath(os.path.dirname(os.path.dirname(__file__)))
-gen = Generator()
 
 
 class Maintenance:
@@ -25,13 +25,13 @@ class Maintenance:
     @property
     def last_screen(self):
         """返回最后一个截图路径"""
-        if self.last(self.screen):
+        if self.last(self.last_screen):
             return os.path.join(self.screen, self.last(self.screen))
 
     def __del__(self):
         for filename in os.listdir(self.screen):
             file = os.path.join(self.screen, filename)
-            if os.path.getmtime(file) < gen.time_line:
+            if os.path.getmtime(file) < generator.time_line:
                 os.remove(file)
                 print("删除文件%s成功！" % file)
 

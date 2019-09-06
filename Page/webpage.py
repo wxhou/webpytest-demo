@@ -46,6 +46,8 @@ class WebPage:
 
     def function(self, func, locator, number=None):
         """共用方法"""
+        if "==" not in locator:
+            raise TypeError("%s 元素没有指定定位方式！" % locator)
         pattern, value = locator.split('==')
         if pattern in self.locate_mode:
             try:
@@ -239,6 +241,7 @@ class WebPage:
         elif text:
             Select(ele).select_by_visible_text(text)
 
+    @property
     def getSource(self):
         """获取页面源代码"""
         return self.driver.page_source

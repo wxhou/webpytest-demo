@@ -79,4 +79,4 @@ class Generator:
 generator = Generator()
 
 if __name__ == '__main__':
-    print(generator.now_time)
+    print(generator.time_line)

@@ -43,3 +43,7 @@ def string_handle(string):
         if i != '*':
             new_str += i
     return str_count, '*' * str_count + new_str
+
+
+bb = "#u1>a[name=tj_login]"
+print(bb.split('=='))

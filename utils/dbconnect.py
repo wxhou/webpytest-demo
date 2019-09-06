@@ -31,4 +31,4 @@ class SQLite:
 if __name__ == '__main__':
     with SQLite() as f:
         f.execute('select * from TEACHER;')
-        print(f.fetchall())
+        print(f.fetchone())
