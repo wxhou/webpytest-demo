@@ -1,18 +1,25 @@
-#!/usr/bin/env python3
+#!/usr/bin/env python
 # coding=utf-8
-import os,sys
+'''
+@File    :   dbconnect.py
+@Time    :   2019/09/28 11:56:41
+@Author  :   wxhou
+@Version :   1.0
+@Contact :   wxhou@yunjinginc.com
+'''
+import sys
 sys.path.append('.')
+import os
 import sqlite3
 
 root_dir = os.path.abspath(os.path.dirname(os.path.dirname(__file__)))
-db_path = os.path.join(root_dir, 'data', 'sqlite3.sqlite')
 
 
 class SQLite:
     """数据库"""
-
     def __init__(self):
-        self.con = sqlite3.connect(db_path)
+        self.con = sqlite3.connect(
+            os.path.join(root_dir, 'data', 'sqlite3.sqlite'))
         self.cur = self.con.cursor()
 
     def __enter__(self):

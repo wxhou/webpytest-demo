@@ -1,8 +1,15 @@
-#!/usr/bin/env python3
+#!/usr/bin/env python
 # coding=utf-8
-import os, sys
-
+'''
+@File    :   readconfig.py
+@Time    :   2019/09/28 11:52:32
+@Author  :   wxhou
+@Version :   1.0
+@Contact :   wxhou@yunjinginc.com
+'''
+import sys
 sys.path.append('.')
+import os
 import configparser
 
 root_dir = os.path.abspath(os.path.dirname(os.path.dirname(__file__)))
@@ -23,7 +30,8 @@ class Config:
 
     @property
     def browser(self):
-        return self.config.get(self.BROWSER.upper(), self.BROWSER.lower()).title()
+        return self.config.get(self.BROWSER.upper(),
+                               self.BROWSER.lower()).title()
 
     @property
     def url(self):
@@ -32,16 +40,6 @@ class Config:
     @url.setter
     def url(self, value):
         self.config.set(self.HOST.upper(), self.HOST.lower(), value)
-        with open(config_path, 'w') as f:
-            self.config.write(f)
-
-    @property
-    def remote(self):
-        return self.config.get(self.REMOTE.upper(), self.REMOTE.lower())
-
-    @remote.setter
-    def remote(self, value):
-        self.config.set(self.REMOTE.upper(), self.REMOTE.lower(), value)
         with open(config_path, 'w') as f:
             self.config.write(f)
 

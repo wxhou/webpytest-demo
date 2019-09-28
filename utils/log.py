@@ -1,15 +1,13 @@
-#!/usr/bin/env python3
+#!/usr/bin/env python
 # coding=utf-8
 '''
-@project : webpytest-demo
-@author  : hoou
-@file   : log.py
-@time   : 10:56
-@Version : 1.0
-@Contact : wxhou@yunjinginc.com
+@File    :   log.py
+@Time    :   2019/09/28 11:57:16
+@Author  :   wxhou
+@Version :   1.0
+@Contact :   wxhou@yunjinginc.com
 '''
 import sys
-
 sys.path.append('.')
 import os
 import logging
@@ -46,7 +44,7 @@ class Log:
 
     @property
     def log_path(self):
-        timeline = datetime.now().strftime("%Y%mweek%W")
+        timeline = datetime.now().strftime("%Y%m")
         return os.path.join(root_dir, 'logs', '{}.log'.format(timeline))
 
     @property

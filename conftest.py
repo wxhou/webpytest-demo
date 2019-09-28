@@ -1,5 +1,14 @@
-#!/usr/bin/env python3
+#!/usr/bin/env python
 # coding=utf-8
+'''
+@File    :   conftest.py
+@Time    :   2019/09/28 11:51:23
+@Author  :   wxhou
+@Version :   1.0
+@Contact :   wxhou@yunjinginc.com
+'''
+import sys
+sys.path.append('.')
 import pytest
 from py._xmlgen import html
 from selenium import webdriver

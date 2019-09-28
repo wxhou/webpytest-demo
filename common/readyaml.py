@@ -1,15 +1,13 @@
-#!/usr/bin/env python3
+#!/usr/bin/env python
 # coding=utf-8
 '''
-@project : webpytest-demo
-@author  : hoou
-@file   : readyaml.py
-@time   : 18:14
-@Version : 1.0
-@Contact : wxhou@yunjinginc.com
+@File    :   readyaml.py
+@Time    :   2019/09/28 11:52:25
+@Author  :   wxhou
+@Version :   1.0
+@Contact :   wxhou@yunjinginc.com
 '''
 import sys
-
 sys.path.append('.')
 import os
 import yaml
@@ -36,4 +34,4 @@ class Element:
 element = Element()
 
 if __name__ == '__main__':
-    print(element.账户)
+    print(element.搜索框)

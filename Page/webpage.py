@@ -1,7 +1,13 @@
-#!/usr/bin/env python3
+#!/usr/bin/env python
 # coding=utf-8
+'''
+@File    :   webpage.py
+@Time    :   2019/09/28 11:54:08
+@Author  :   wxhou
+@Version :   1.0
+@Contact :   wxhou@yunjinginc.com
+'''
 import sys
-
 sys.path.append('.')
 from selenium.webdriver.common.action_chains import ActionChains
 from selenium.webdriver.support import expected_conditions as EC

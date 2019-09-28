@@ -1,8 +1,15 @@
-#!/usr/bin/env python3
+#!/usr/bin/env python
 # coding=utf-8
-import os, sys
-
+'''
+@File    :   data_maintenance.py
+@Time    :   2019/09/28 11:55:42
+@Author  :   wxhou
+@Version :   1.0
+@Contact :   wxhou@yunjinginc.com
+'''
+import sys
 sys.path.append('.')
+import os
 from utils.generated import generator
 
 root_dir = os.path.abspath(os.path.dirname(os.path.dirname(__file__)))
@@ -26,7 +33,8 @@ class Maintenance:
     def last_screen(self):
         """返回最后一个截图路径"""
         if self.last(self.last_screen):
-            return os.path.join(self.screen, self.last(self.screen))
+            last_piture = os.path.join(self.screen, self.last(self.screen))
+            return last_piture
 
     def __del__(self):
         for filename in os.listdir(self.screen):

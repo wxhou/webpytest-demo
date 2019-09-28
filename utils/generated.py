@@ -1,8 +1,15 @@
-#!/usr/bin/env python3
+#!/usr/bin/env python
 # coding=utf-8
-import os, sys
-
+'''
+@File    :   generated.py
+@Time    :   2019/09/28 11:57:01
+@Author  :   wxhou
+@Version :   1.0
+@Contact :   wxhou@yunjinginc.com
+'''
+import sys
 sys.path.append('.')
+import os
 import time
 from datetime import datetime
 from faker import Factory

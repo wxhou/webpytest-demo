@@ -1,7 +1,13 @@
-#!/usr/bin/env python3
+#!/usr/bin/env python
 # coding=utf-8
+'''
+@File    :   searchpage.py
+@Time    :   2019/09/28 11:54:22
+@Author  :   wxhou
+@Version :   1.0
+@Contact :   wxhou@yunjinginc.com
+'''
 import sys
-
 sys.path.append('.')
 from Page.webpage import WebPage, sleep
 from common.readyaml import element
