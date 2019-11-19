@@ -45,5 +45,10 @@ def string_handle(string):
     return str_count, '*' * str_count + new_str
 
 
-bb = "#u1>a[name=tj_login]"
-print(bb.split('=='))
+# bb = "#u1>a[name=tj_login]"
+# print(bb.split('=='))
+cc  = """
+{"success":true,"message":null,"data":"{\"projectId\":\"ff8080816db4f262016db578fbb31d0e\"}","results":0} """
+import re
+
+print(re.findall(r'\w{32}',cc))

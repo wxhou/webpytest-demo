@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # coding=utf-8
 '''
 @File    :   readconfig.py
@@ -14,7 +14,7 @@ import configparser
 
 root_dir = os.path.abspath(os.path.dirname(os.path.dirname(__file__)))
 # 如果可以，请不要在root_dir中使用os.getcwd()
-config_path = os.path.join(root_dir, 'data', 'config.ini')
+config_path = os.path.join(root_dir, 'config.ini')
 
 
 class Config:

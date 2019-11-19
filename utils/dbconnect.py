@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # coding=utf-8
 '''
 @File    :   dbconnect.py
@@ -19,7 +19,7 @@ class SQLite:
     """数据库"""
     def __init__(self):
         self.con = sqlite3.connect(
-            os.path.join(root_dir, 'data', 'sqlite3.sqlite'))
+            os.path.join(root_dir, 'database', 'sqlite3.sqlite'))
         self.cur = self.con.cursor()
 
     def __enter__(self):

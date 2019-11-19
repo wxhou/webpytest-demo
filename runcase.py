@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # coding=utf-8
 '''
 @File    :   runcase.py
@@ -9,8 +9,6 @@
 '''
 import sys
 sys.path.append('.')
-import os
-import sys
 import pytest
 
 if __name__ == '__main__':

@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # coding=utf-8
 '''
 @File    :   conftest.py
@@ -23,10 +23,10 @@ def drivers(request):
     if driver is None:
         if conf.browser == 'Chrome':
             driver = webdriver.Chrome()
+            driver.maximize_window()
         elif conf.browser == "Firefox":
             driver = webdriver.Firefox()
-        driver.maximize_window()
-
+            driver.maximize_window()
     def fn():
         print("当全部用例执行完之后：quit driver！")
         driver.quit()

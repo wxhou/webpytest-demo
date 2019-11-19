@@ -1,9 +1,3 @@
-搜索框: "id==kw"
-候选: "css==.bdsug-overflow"
-搜索候选: "css==#form div li:nth-child(%d)"
-搜索按钮: "id==su"
-结果列表: ".AC-faviconT+a"
-
 登录: "css==#u1>a[name=tj_login]"
 用户名登录: "id==TANGRAM__PSP_10__footerULoginBtn"
 用户名: "name==userName"
