@@ -17,8 +17,8 @@ from selenium.webdriver.support.select import Select
 from selenium.webdriver.common.by import By
 from selenium.common.exceptions import *
 from selenium import webdriver
+from common.image import pic
 from utils.log import log
-from PIL import Image
 import time
 
 
@@ -208,7 +208,7 @@ class WebPage:
         try:
             self.driver.switch_to.default_content()
         except Exception as e:
-            print(format(e))
+            log.exception(format(e))
         else:
             log.info("返回至默认的iframe")
 
@@ -221,12 +221,12 @@ class WebPage:
         for i in range(3, 0, -1):
             try:
                 assert now_handle1 != now_handle2
-                print('切换新标签成功！%s' % self.driver.title)
+                log.info('切换新标签成功！%s' % self.driver.title)
                 break
             except AssertionError:
-                print("切换标签失败！正在重试，还有%d机会！" % i)
+                log.exception("切换标签失败！正在重试，还有%d机会！" % i)
         else:
-            print("切换标签失败!请检查！")
+            log.error("切换标签失败!请检查！")
 
     def screenshots_of_element(self,
                                locator,
@@ -236,14 +236,7 @@ class WebPage:
         ele = self.findelement(locator, number)
         self.driver.save_screenshot(screenshot_path)
         self.shot_file(screenshot_path)
-        log.info("需要截图的元素坐标%s" % ele.location)
-        log.info("需要截图的元素大小%s" % ele.size)
-        shot = (ele.location['x'], ele.location['y'],
-                ele.location['x'] + ele.size['width'],
-                ele.location['y'] + ele.size['height'])
-        im = Image.open(screenshot_path)
-        im = im.crop(shot)
-        im.save(screenshot_path)
+        pic.element_shot(ele, screenshot_path)
         sleep()
         log.info("截图的路径是：%s" % screenshot_path)
         return screenshot_path
@@ -288,7 +281,7 @@ class WebPage:
     @property
     def getSource(self):
         """获取页面源代码"""
-        log.info("正在获取页面的源码！")
+        log.info("获取页面的源码！")
         return self.driver.page_source
 
     def shot_file(self, path):

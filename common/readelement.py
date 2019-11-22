@@ -30,7 +30,7 @@ class Element:
         if sections:
             return sections
         else:
-            raise ValueError("关键字 %s 获取元素结果为空" % item)
+            raise AttributeError("关键字 %s 获取元素结果为空" % item)
 
 
 if __name__ == '__main__':
