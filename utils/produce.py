@@ -18,7 +18,7 @@ faker = Factory().create('zh_CN')
 root_dir = os.path.abspath(os.path.dirname(os.path.dirname(__file__)))
 
 
-class Generator:
+class Produce:
     """数据生成"""
 
     @property
@@ -83,7 +83,7 @@ class Generator:
         return time.time() - 7 * 24 * 3600
 
 
-generator = Generator()
+produce = Produce()
 
 if __name__ == '__main__':
-    print(generator.time_line)
+    print(produce.time_line)

@@ -46,7 +46,7 @@ class Picture:
         return result == 0.0
 
 
-pic = Picture()
+picture = Picture()
 
 if __name__ == '__main__':
     pass
