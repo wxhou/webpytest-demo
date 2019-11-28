@@ -19,19 +19,12 @@ config_path = os.path.join(root_dir, 'config.ini')
 
 class Config:
     """配置文件"""
-    BROWSER = 'browser'
     HOST = 'host'
-    REMOTE = 'remote'
 
     def __init__(self):
         self.config = configparser.RawConfigParser()
         # 当有%的符号时请使用Raw读取
         self.config.read(config_path, encoding='utf-8')
-
-    @property
-    def browser(self):
-        return self.config.get(self.BROWSER.upper(),
-                               self.BROWSER.lower()).title()
 
     @property
     def url(self):
@@ -48,4 +41,4 @@ conf = Config()
 
 if __name__ == '__main__':
     conf = Config()
-    print(conf.browser)
+    print(conf.url)

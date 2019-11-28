@@ -21,12 +21,8 @@ driver = None
 def drivers(request):
     global driver
     if driver is None:
-        if conf.browser == 'Chrome':
-            driver = webdriver.Chrome()
-            driver.maximize_window()
-        elif conf.browser == "Firefox":
-            driver = webdriver.Firefox()
-            driver.maximize_window()
+        driver = webdriver.Chrome()
+        driver.maximize_window()
     def fn():
         print("当全部用例执行完之后：quit driver！")
         driver.quit()

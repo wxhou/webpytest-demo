@@ -33,7 +33,6 @@ def sleep(seconds=1):
 
 class WebPage:
     """selenium基类"""
-
     def __init__(self, driver):
         self.locate_mode = {
             'css': By.CSS_SELECTOR,
@@ -150,7 +149,7 @@ class WebPage:
         return number
 
     def Exists(self, locator, number=None):
-        '''元素是否可见(sample)'''
+        '''元素是否存在(sample)'''
         pattern, value = locator.split('==')
         message = value % number if number else value
         log.info("检查元素{}在DOM中是否可见".format(message))
@@ -272,17 +271,6 @@ class WebPage:
         self.driver.execute_script("arguments[0].focus();", ele)
         log.info("元素不可见，正在聚焦元素%s！" % message)
 
-    def click_drop_down(
-            self,
-            selectlocator,
-            selectnumber=None,
-            optionlocator=None,
-            optionnumber=None,
-    ):
-        """封装两次点击"""
-        self.is_click(selectlocator, selectnumber)
-        self.is_click(optionlocator, optionnumber)
-
     def select_drop_down(self,
                          locator,
                          number=None,
@@ -295,10 +283,13 @@ class WebPage:
         # 这里一定要加等待时间，否则会引起如下报错
         # Element is not currently visible and may not be manipulated
         if index:
+            log.info("正在下拉框中选择：第%s项" % index)
             Select(ele).select_by_index(index)
         elif value:
+            log.info("正在下拉框中选择：%s" % value)
             Select(ele).select_by_value(value)
         elif text:
+            log.info("正在下拉框中选择：%s" % text)
             Select(ele).select_by_visible_text(text)
 
     @property
