@@ -8,11 +8,11 @@
 @Contact :   wxhou@yunjinginc.com
 '''
 import sys
+
 sys.path.append('.')
 import pytest
 from py._xmlgen import html
 from selenium import webdriver
-from common.readconfig import conf
 
 driver = None
 
@@ -23,6 +23,7 @@ def drivers(request):
     if driver is None:
         driver = webdriver.Chrome()
         driver.maximize_window()
+
     def fn():
         print("当全部用例执行完之后：quit driver！")
         driver.quit()

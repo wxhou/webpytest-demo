@@ -8,12 +8,12 @@
 @Contact :   wxhou@yunjinginc.com
 '''
 import sys
+
 sys.path.append('.')
 import os
 import logging
 from datetime import datetime
-
-root_dir = os.path.abspath(os.path.dirname(os.path.dirname(__file__)))
+import settings
 
 
 class Log:
@@ -45,7 +45,7 @@ class Log:
     @property
     def log_path(self):
         timeline = datetime.now().strftime("%Y%m")
-        return os.path.join(root_dir, 'logs', '{}.log'.format(timeline))
+        return os.path.join(settings.LOG_PATH, '{}.log'.format(timeline))
 
     @property
     def fmt(self):

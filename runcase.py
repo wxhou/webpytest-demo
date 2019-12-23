@@ -8,6 +8,7 @@
 @Contact :   wxhou@yunjinginc.com
 '''
 import sys
+
 sys.path.append('.')
 import pytest
 

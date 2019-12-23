@@ -8,14 +8,15 @@
 @Contact :   wxhou@yunjinginc.com
 '''
 import sys
+
 sys.path.append('.')
 import os
 import time
 from datetime import datetime
-from faker import Factory
+from faker import Faker
+import settings
 
-faker = Factory().create('zh_CN')
-root_dir = os.path.abspath(os.path.dirname(os.path.dirname(__file__)))
+faker = Faker('zh_CN')
 
 
 class Produce:
@@ -69,7 +70,7 @@ class Produce:
     @property
     def screen_name(self):
         '''截图名称'''
-        screen_name = os.path.join(root_dir, 'screenshot', '%s.png' % self.now_time)
+        screen_name = os.path.join(settings.SCREENSHOT_PATH, '%s.png' % self.now_time)
         return screen_name
 
     @property
@@ -86,4 +87,4 @@ class Produce:
 produce = Produce()
 
 if __name__ == '__main__':
-    print(produce.time_line)
+    print(produce.name)

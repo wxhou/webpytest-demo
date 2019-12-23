@@ -8,18 +8,18 @@
 @Contact :   wxhou@yunjinginc.com
 '''
 import sys
+
 sys.path.append('.')
 import os
+import settings
 from utils.produce import produce
-
-root_dir = os.path.abspath(os.path.dirname(os.path.dirname(__file__)))
 
 
 class Maintenance:
     """数据维护"""
 
     def __init__(self):
-        self.screen = os.path.join(root_dir, 'screenshot')
+        self.screen = settings.SCREENSHOT_PATH
         if not os.path.exists(self.screen):
             os.mkdir(self.screen)
 
@@ -35,7 +35,7 @@ class Maintenance:
         if self.last(self.screen):
             last_piture = os.path.join(self.screen, self.last(self.screen))
             return last_piture
-        
+
     def __del__(self):
         for filename in os.listdir(self.screen):
             file = os.path.join(self.screen, filename)

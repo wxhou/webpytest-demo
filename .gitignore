@@ -40,7 +40,7 @@ htmlcov/
 .coverage.*
 .cache
 nosetests.xml
-demo.py
+settings.py
 *.xml
 *.html
 *,cover
@@ -61,4 +61,3 @@ target/
 # picture
 *.png
 *.json
-demo.py

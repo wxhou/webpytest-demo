@@ -8,18 +8,17 @@
 @Contact :   wxhou@yunjinginc.com
 '''
 import sys
-sys.path.append('.')
-import os
-import sqlite3
 
-root_dir = os.path.abspath(os.path.dirname(os.path.dirname(__file__)))
+sys.path.append('.')
+import sqlite3
+import settings
 
 
 class SQLite:
-    """数据库"""
+    """SQLite数据库"""
+
     def __init__(self):
-        self.con = sqlite3.connect(
-            os.path.join(root_dir, 'TestData', 'sqlite3.sqlite'))
+        self.con = sqlite3.connect(settings.SQLITE_PATH)
         self.cur = self.con.cursor()
 
     def __enter__(self):
