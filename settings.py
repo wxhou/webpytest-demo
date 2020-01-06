@@ -9,7 +9,7 @@ BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 CONFIG_PATH = os.path.join(BASE_DIR, 'config.ini')
 
 # 页面元素目录
-ELEMENT_PATH = lambda x: os.path.join(BASE_DIR, 'PageElements', '%s.yaml' % x)
+ELEMENT_PATH = os.path.join(BASE_DIR, 'PageElements')
 
 # SQLite数据库
 SQLITE_PATH = os.path.join(BASE_DIR, 'TestData', 'sqlite3.sqlite')

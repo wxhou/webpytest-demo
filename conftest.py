@@ -13,6 +13,7 @@ sys.path.append('.')
 import pytest
 from py._xmlgen import html
 from selenium import webdriver
+from common.inspect import inspect_element
 
 driver = None
 
@@ -20,6 +21,7 @@ driver = None
 @pytest.fixture(scope='session', autouse=True)
 def drivers(request):
     global driver
+    inspect_element()
     if driver is None:
         driver = webdriver.Chrome()
         driver.maximize_window()

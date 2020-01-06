@@ -2,4 +2,4 @@
 候选: "css==.bdsug-overflow"
 搜索候选: "css==#form div li:nth-child(%d)"
 搜索按钮: "id==su"
-结果列表: ".AC-faviconT+a"
+结果列表: "css==.AC-faviconT+a"
