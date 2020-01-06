@@ -21,20 +21,21 @@ def inspect_element():
     start_time = time.time()
     for i in os.listdir(settings.ELEMENT_PATH):
         _path = os.path.join(settings.ELEMENT_PATH, i)
-        with open(_path) as f:
-            data = yaml.safe_load(f)
-            for k in data:
-                ele = data[k]
-                if "==" in ele:
-                    pattern, value = ele.split('==')
-                    if pattern not in LOCATE_MODE:
-                        raise AttributeError('【%s】路径中【%s]元素没有指定类型' % (i, k))
-                    if pattern == 'xpath':
-                        assert '//' in ele, '【%s】路径中【%s]元素xpath类型与值不配' % (i, k)
-                    if pattern == 'css':
-                        assert '//' not in ele, '【%s】路径中【%s]元素css类型与值不配' % (i, k)
-                else:
-                    raise AttributeError('【%s】路径中【%s]元素没有指定元素分隔符' % (i, k))
+        if os.path.isfile(_path):
+            with open(_path,encoding='utf-8') as f:
+                data = yaml.safe_load(f)
+                for k in data:
+                    ele = data[k]
+                    if "==" in ele:
+                        pattern, value = ele.split('==')
+                        if pattern not in LOCATE_MODE:
+                            raise AttributeError('【%s】路径中【%s]元素没有指定类型' % (i, k))
+                        if pattern == 'xpath':
+                            assert '//' in ele, '【%s】路径中【%s]元素xpath类型与值不配' % (i, k)
+                        if pattern == 'css':
+                            assert '//' not in ele, '【%s】路径中【%s]元素css类型与值不配' % (i, k)
+                    else:
+                        raise AttributeError('【%s】路径中【%s]元素没有指定元素分隔符' % (i, k))
     end_time = time.time()
     print("校验元素done！用时%.3f秒！" % (end_time - start_time))
 
