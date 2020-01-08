@@ -46,7 +46,7 @@ def image_contrast(self, img1, img2):
     return result == 0.0
 
 
-def image_name(string):
+def get_file_name(string):
     """获取文件名称"""
     pattern = re.compile(r'([^<>/\\\|:""\*\?]+)\.\w+$')
     return pattern.findall(string)
