@@ -1,0 +1,1 @@
+找页面文本: "xpath==//*[contains(text(),'%s')]"

@@ -10,14 +10,14 @@
 import sys
 
 sys.path.append('.')
-from Page.webpage import WebPage, sleep
+from Page.basepage import BasePage, sleep
 from common.readelement import Element
 
 login = Element('login')
 search = Element('search')
 
 
-class SearchPage(WebPage):
+class SearchPage(BasePage):
     def input_search(self, content):
         """输入搜索"""
         self.input_text(search.搜索框, text=content)

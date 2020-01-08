@@ -8,7 +8,7 @@ from selenium.webdriver.support.select import Select
 from selenium.webdriver.common.by import By
 from selenium.common.exceptions import *
 from selenium import webdriver
-from common.image import picture
+from common.image import element_shot, image_name
 from utils.log import log
 import time
 
@@ -17,8 +17,18 @@ selenium基类
 本文件存放了selenium基类的深度封装方法
 """
 
+locate = "xpath==//*[contains(text(),'%s')]"
 
-def sleep(seconds=1):
+LOCATE_MODE = {
+    'css': By.CSS_SELECTOR,
+    'xpath': By.XPATH,
+    'name': By.NAME,
+    'id': By.ID,
+    'class': By.CLASS_NAME
+}  # 元素定位的类型
+
+
+def sleep(seconds=1.0):
     '''
     等待时间
     有些步骤不强制等待，只用显式等待会导致执行报错
@@ -29,15 +39,6 @@ def sleep(seconds=1):
 def element_value(locator, number):
     """元素值"""
     return locator % number if number else locator
-
-
-LOCATE_MODE = {
-    'css': By.CSS_SELECTOR,
-    'xpath': By.XPATH,
-    'name': By.NAME,
-    'id': By.ID,
-    'class': By.CLASS_NAME
-}  # 元素定位的类型
 
 
 class WebPage:
@@ -74,31 +75,32 @@ class WebPage:
 
     def findelement(self, locator, number=None):
         """寻找单个元素"""
-        function = lambda *args: self.wait.until(lambda x: x.find_element(*args),
-                                                 message="查找单个元素%s失败！" % element_value(locator, number))
-        return WebPage.selector(function, locator, number)
+        return WebPage.selector(
+            lambda *args: self.wait.until(lambda x: x.find_element(*args),
+                                          message="查找单个元素%s失败！" % element_value(locator, number)),
+            locator, number)
 
     def findelements(self, locator, number=None):
-        '''查找多个相同的元素'''
-        function = lambda *args: self.wait.until(lambda x: x.find_elements(*args),
-                                                 message="查找单个元素%s失败！" % element_value(locator, number))
-        return WebPage.selector(function, locator, number)
+        """查找多个相同的元素"""
+        return WebPage.selector(
+            lambda *args: self.wait.until(lambda x: x.find_elements(*args),
+                                          message="查找单个元素%s失败！" % element_value(locator, number)),
+            locator, number)
 
     def Exists(self, locator, number=None):  # 判断元素是否在DOM中
         '''元素是否存在(DOM)'''
-        function = lambda *args: EC.presence_of_element_located(args)(self.driver)
         try:
-            WebPage.selector(function, locator, number=number)
+            WebPage.selector(lambda *args: EC.presence_of_element_located(args)(self.driver),
+                             locator, number=number)
             return True
         except:
             return False
 
     def isElementVisible(self, locator, number=None):
         '''元素是否可见'''
-        function = lambda *args: WebDriverWait(self.driver, self.visible).until(
-            EC.visibility_of_element_located(args))
         try:
-            WebPage.selector(function, locator, number)
+            WebPage.selector(lambda *args: WebDriverWait(self.driver, self.visible).until(
+                EC.visibility_of_element_located(args)), locator, number)
             return True
         except:
             return False
@@ -109,7 +111,7 @@ class WebPage:
 
     def inline_scroll_bar(self, element, func='Left', number='10000'):
         """
-        内嵌滚动条（默认为向右）
+        内嵌滚动条（默认为向右滚动）
         :param func: ['Left','Top']
         :param number: ['10000','0']
         """
@@ -132,10 +134,10 @@ class WebPage:
 
     def input_text(self, locator, text, number=None):
         '''输入(输入前先清空)'''
+        sleep(0.5)
         msg = element_value(locator, number)
-        function = lambda *args: self.wait.until(
-            EC.element_to_be_clickable(args), message="在元素%s中，输入【%s】失败！" % (msg, text))
-        ele = WebPage.selector(function, locator, number)
+        ele = WebPage.selector(lambda *args: self.wait.until(
+            EC.element_to_be_clickable(args), message="在元素%s中，输入【%s】失败！" % (msg, text)), locator, number)
         self.focus(ele)
         ele.clear()
         ele.send_keys(text)
@@ -144,13 +146,17 @@ class WebPage:
     def is_click(self, locator, number=None):
         '''点击'''
         msg = element_value(locator, number)
-        function = lambda *args: self.wait.until(
-            EC.element_to_be_clickable(args), message="点击元素%s失败！" % msg)
-        ele = WebPage.selector(function, locator, number)
+        ele = WebPage.selector(lambda *args: self.wait.until(
+            EC.element_to_be_clickable(args), message="点击元素%s失败！" % msg), locator, number)
         self.focus(ele)
         ele.click()
         log.info("点击元素%s" % msg)
-        self.driver.implicitly_wait(1)
+        sleep()
+
+    def isPagerefresh(self, locator, number=None):
+        """判断页面是否刷新"""
+        ele = self.findelement(locator, number)
+        return EC.staleness_of(ele)
 
     def isElementText(self, locator, number=None):
         '''获取当前的text'''
@@ -160,17 +166,15 @@ class WebPage:
 
     def textInElement(self, locator, text, number=None):
         '''检查某段文本在输入框中'''
-        function = lambda *args: EC.text_to_be_present_in_element(args, text)(
-            self.driver)
         log.info("检查文本【%s】在输入框%s中" % (text, element_value(locator, number)))
-        return WebPage.selector(function, locator, number)
+        return WebPage.selector(lambda *args: EC.text_to_be_present_in_element(args, text)(
+            self.driver), locator, number)
 
     def isSelected(self, locator, number=None):
         '''判断是否选中'''
-        function = lambda *args: self.wait.until(
-            EC.element_located_selection_state_to_be(args, True))
         log.info("检查元素:%s 是否被选中" % element_value(locator, number))
-        return WebPage.selector(function, locator, number)
+        return WebPage.selector(lambda *args: self.wait.until(
+            EC.element_located_selection_state_to_be(args, True)), locator, number)
 
     def action_click(self, locator, number=None):
         '''使用鼠标点击'''
@@ -190,12 +194,18 @@ class WebPage:
         self.action._actions.pop()  # 防止重复输入
 
     def upload_File(self, locator, filepath, number=None):
-        '''上传文件'''
+        """上传文件"""
+        name = image_name(filepath)[0]
         ele = self.findelement(locator, number)
         self.focus(ele)
         ele.send_keys(filepath)
         log.info("正在上传文件：%s" % filepath)
-        sleep(5)
+        start_time = time.time()
+        while not self.Exists(locate % name):
+            sleep(seconds=0.1)
+            if (time.time() - start_time) > self.timeout:
+                raise TimeoutException("在元素【】上传文件【】失败" % ())
+        log.info("上传文件【%s】成功！" % filepath)
 
     def screenshots_of_element(self, locator, path, number=None):
         '''对某个元素进行截图,并返回截图路径'''
@@ -203,7 +213,7 @@ class WebPage:
         self.focus(ele)  # 元素不可见则聚焦
         self.driver.save_screenshot(path)
         self.shot_file(path)
-        picture.element_shot(ele, path)
+        element_shot(ele, path)
         self.driver.implicitly_wait(1)
         log.info("截图的路径是：%s" % path)
         return path
@@ -218,7 +228,7 @@ class WebPage:
         return Select(ele)
 
     def alertTextExists(self):
-        "判断弹框是否出现，并返回弹框的文字"
+        """判断弹框是否出现，并返回弹框的文字"""
         alert = EC.alert_is_present()(self.driver)
         text = alert.text
         log.info("Alert弹窗提示为：%s" % text)
@@ -227,10 +237,9 @@ class WebPage:
 
     def switchToFrame(self, locator, number=None):
         """切换iframe"""
-        function = lambda *args: self.wait.until(
-            EC.frame_to_be_available_and_switch_to_it(args))
         log.info("切换最新的iframe")
-        return WebPage.selector(function, locator, number)
+        return WebPage.selector(lambda *args: self.wait.until(
+            EC.frame_to_be_available_and_switch_to_it(args)), locator, number)
 
     def switchToDefaultFrame(self):
         """返回默认"""
