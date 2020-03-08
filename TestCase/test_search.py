@@ -1,19 +1,15 @@
 #!/usr/bin/env python3
-# coding=utf-8
-'''
-@File    :   test_search.py
-@Time    :   2019/09/28 11:54:36
-@Author  :   wxhou
-@Version :   1.0
-@Contact :   wxhou@yunjinginc.com
-'''
+# -*- coding:utf-8 -*-
 import sys
+
 sys.path.append('.')
 import re
 import pytest
 from PageObject.searchpage import SearchPage
-from common.readconfig import conf
-from utils.log import log
+from common.readconfig import ini
+from utils.logger import Logger
+
+log = Logger('testcase').logger
 
 
 class TestSearch:
@@ -21,7 +17,7 @@ class TestSearch:
     def open_baidu(self, drivers):
         """打开百度"""
         search = SearchPage(drivers)
-        search.get_url(conf.url)
+        search.get_url(ini.url)
 
     def test_001(self, drivers):
         """搜索"""

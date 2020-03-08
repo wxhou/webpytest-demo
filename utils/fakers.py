@@ -1,12 +1,5 @@
 #!/usr/bin/env python3
-# coding=utf-8
-'''
-@File    :   generated.py
-@Time    :   2019/09/28 11:57:01
-@Author  :   wxhou
-@Version :   1.0
-@Contact :   wxhou@yunjinginc.com
-'''
+# -*- coding:utf-8 -*-
 import sys
 
 sys.path.append('.')
@@ -19,8 +12,8 @@ import settings
 faker = Faker('zh_CN')
 
 
-class Produce:
-    """数据生成"""
+class Fakers:
+    """假数据生成"""
 
     @property
     def mobile_number(self):
@@ -84,7 +77,7 @@ class Produce:
         return time.time() - 7 * 24 * 3600
 
 
-produce = Produce()
+fakers = Fakers()
 
 if __name__ == '__main__':
-    print(produce.name)
+    print(fakers.name)

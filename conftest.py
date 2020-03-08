@@ -1,19 +1,12 @@
 #!/usr/bin/env python3
-# coding=utf-8
-'''
-@File    :   conftest.py
-@Time    :   2019/09/28 11:51:23
-@Author  :   wxhou
-@Version :   1.0
-@Contact :   wxhou@yunjinginc.com
-'''
+# -*- coding:utf-8 -*-
 import sys
 
 sys.path.append('.')
 import pytest
 from py._xmlgen import html
-from selenium import webdriver
-from common.inspect import inspect_element
+from airtest_selenium import WebChrome
+from common.inspect_element import inspect_element
 
 driver = None
 
@@ -23,7 +16,7 @@ def drivers(request):
     global driver
     inspect_element()
     if driver is None:
-        driver = webdriver.Chrome()
+        driver = WebChrome()
         driver.maximize_window()
 
     def fn():

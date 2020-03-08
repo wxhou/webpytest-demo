@@ -1,28 +1,19 @@
 #!/usr/bin/env python3
-# coding=utf-8
-'''
-@File    :   readconfig.py
-@Time    :   2019/09/28 11:52:32
-@Author  :   wxhou
-@Version :   1.0
-@Contact :   wxhou@yunjinginc.com
-'''
+# -*- coding:utf-8 -*-
 import sys
 
 sys.path.append('.')
 import configparser
 import settings
 
-
-
 HOST = 'HOST'
 
 
-class Config:
+class ReadConfig:
     """配置文件"""
 
     def __init__(self):
-        self.config_path = settings.CONFIG_PATH
+        self.config_path = settings.INI_PATH
         self.config = configparser.RawConfigParser()  # 当有%的符号时请使用Raw读取
         self.config.read(self.config_path, encoding='utf-8')
 
@@ -45,8 +36,7 @@ class Config:
         self._set(HOST, HOST, value)
 
 
-conf = Config()
+ini = ReadConfig()
 
 if __name__ == '__main__':
-    conf = Config()
-    print(conf.url)
+    print(ini.url)
