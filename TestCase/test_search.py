@@ -24,7 +24,7 @@ class TestSearch:
         search = SearchPage(drivers)
         search.input_search("selenium")
         search.click_search()
-        result = re.search(r'selenium', search.getSource)
+        result = re.search(r'selenium', drivers.page_source)
         log.info(result)
         assert result
 
@@ -32,8 +32,9 @@ class TestSearch:
         """测试搜索候选"""
         search = SearchPage(drivers)
         search.input_search("selenium")
-        log.info(list(search.imagine))
-        assert all(["selenium" in i for i in search.imagine])
+        results = list(search.imagine)
+        log.info(results)
+        assert all(["selenium" in i for i in results])
 
 
 if __name__ == '__main__':
