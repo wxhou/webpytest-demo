@@ -3,11 +3,7 @@
 import sys
 
 sys.path.append('.')
-import os
-import time
-from datetime import datetime
 from faker import Faker
-import settings
 
 faker = Faker('zh_CN')
 
@@ -59,22 +55,6 @@ class Fakers:
     def name(self):
         '''生成名字'''
         return faker.name()
-
-    @property
-    def screen_name(self):
-        '''截图名称'''
-        screen_name = os.path.join(settings.SCREENSHOT_PATH, '%s.png' % self.now_time)
-        return screen_name
-
-    @property
-    def now_time(self):
-        '''现在的时间'''
-        return datetime.now().strftime("%Y%m%d_%H%M%S")
-
-    @property
-    def time_line(self):
-        '''删除的时间线'''
-        return time.time() - 7 * 24 * 3600
 
 
 fakers = Fakers()

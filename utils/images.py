@@ -2,12 +2,11 @@
 # -*- coding:utf-8 -*-
 import re
 import os
-import time
-import settings
+import conf
 from PIL import Image
-from utils.logger import Logger
-
-log = Logger('image').logger
+from utils.logger import log
+from utils.times import sleep
+from airtest_selenium.exceptions import IsNotTemplateError
 
 
 def element_screenshot(locator, path):
@@ -20,7 +19,7 @@ def element_screenshot(locator, path):
     im = Image.open(path)
     im = im.crop(shot)
     im.save(path)
-    time.sleep(1)
+    sleep()
 
 
 def get_image_name(string):
@@ -31,8 +30,10 @@ def get_image_name(string):
 
 def get_airtest_image(name):
     """获取airtest图像"""
-    _path = settings.AIRTEST_PATH
-    return os.path.join(_path, f"{name}.png")
+    _path = os.path.join(conf.AIRTEST_IMAGE, "{}.png".format(name))
+    if os.path.exists(_path):
+        return _path
+    raise IsNotTemplateError("验证图片不存在：{}".format(_path))
 
 
 if __name__ == '__main__':

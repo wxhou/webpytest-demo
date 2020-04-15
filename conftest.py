@@ -3,9 +3,11 @@
 import sys
 
 sys.path.append('.')
+import conf
 import pytest
 from py._xmlgen import html
 from airtest_selenium import WebChrome
+from utils.clear_data import clear_old_data
 from common.inspect_element import inspect_element
 
 driver = None
@@ -22,6 +24,8 @@ def drivers(request):
     def fn():
         print("当全部用例执行完之后：quit driver！")
         driver.quit()
+        clear_old_data(conf.TEST_SUITES)
+        clear_old_data(conf.BASE_DIR)
 
     request.addfinalizer(fn)
     return driver
@@ -42,9 +46,9 @@ def pytest_runtest_makereport(item):
         xfail = hasattr(report, 'wasxfail')
         if (report.skipped and xfail) or (report.failed and not xfail):
             file_name = report.nodeid.replace("::", "_") + ".png"
-            screen_img = _capture_screenshot()
+            screen_img = _capture_screenshot()  # base64截图
             if file_name:
-                html = '<div><img src="data:image/png;base64,%s" alt="screenshot" style="width:600px;height:300px;" ' \
+                html = '<div><img src="data:image/png;base64,%s" alt="screenshot" style="width:1024px;height:768px;" ' \
                        'onclick="window.open(this.src)" align="right"/></div>' % screen_img
                 extra.append(pytest_html.extras.html(html))
         report.extra = extra
@@ -76,6 +80,6 @@ def pytest_html_results_table_html(report, data):
 def _capture_screenshot():
     '''
     截图保存为base64
-    :return:
+    :return: base64字符串
     '''
     return driver.get_screenshot_as_base64()

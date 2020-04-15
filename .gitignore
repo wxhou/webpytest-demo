@@ -40,7 +40,6 @@ htmlcov/
 .coverage.*
 .cache
 nosetests.xml
-settings.py
 *.xml
 *.html
 *,cover
@@ -59,5 +58,4 @@ docs/_build/
 target/
 .DS_Store
 # picture
-*.png
 *.json

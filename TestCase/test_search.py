@@ -6,10 +6,9 @@ sys.path.append('.')
 import re
 import pytest
 from PageObject.searchpage import SearchPage
+from common.airtest_method import AirTestMethod
 from common.readconfig import ini
-from utils.logger import Logger
-
-log = Logger('testcase').logger
+from utils.logger import log
 
 
 class TestSearch:
@@ -17,13 +16,16 @@ class TestSearch:
     def open_baidu(self, drivers):
         """打开百度"""
         search = SearchPage(drivers)
+        airtest = AirTestMethod(drivers)
         search.get_url(ini.url)
+        airtest.assert_template("百度首页logo")
 
     def test_001(self, drivers):
         """搜索"""
         search = SearchPage(drivers)
         search.input_search("selenium")
         search.click_search()
+        assert 0
         result = re.search(r'selenium', drivers.page_source)
         log.info(result)
         assert result
@@ -38,4 +40,4 @@ class TestSearch:
 
 
 if __name__ == '__main__':
-    pytest.main(['-v', 'test_search.py'])
+    pytest.main(['test_search.py'])

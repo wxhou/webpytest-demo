@@ -3,8 +3,8 @@
 import sys
 
 sys.path.append('.')
+import conf
 import configparser
-import settings
 
 HOST = 'HOST'
 
@@ -13,7 +13,7 @@ class ReadConfig:
     """配置文件"""
 
     def __init__(self):
-        self.config_path = settings.INI_PATH
+        self.config_path = conf.INI_PATH
         self.config = configparser.RawConfigParser()  # 当有%的符号时请使用Raw读取
         self.config.read(self.config_path, encoding='utf-8')
 
@@ -30,10 +30,6 @@ class ReadConfig:
     @property
     def url(self):
         return self._get(HOST, HOST)
-
-    @url.setter
-    def url(self, value):
-        self._set(HOST, HOST, value)
 
 
 ini = ReadConfig()

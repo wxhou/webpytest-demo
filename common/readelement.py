@@ -5,20 +5,20 @@ import sys
 sys.path.append('.')
 import os
 import yaml
-import settings
+import conf
 
 
 class Element:
     """获取元素"""
 
     def __init__(self, name):
-        self.path = os.path.join(settings.ELEMENT_PATH, '%s.yaml' % name)
+        self.path = os.path.join(conf.ELEMENT_PATH, '%s.yaml' % name)
         if not os.path.exists(self.path):
             raise FileNotFoundError("%s 文件不存在！" % self.path)
         with open(self.path, encoding='utf-8') as f:
             self.data = yaml.safe_load(f)
 
-    def __call__(self, item):
+    def __getitem__(self, item):
         return self.data[item]
 
 
