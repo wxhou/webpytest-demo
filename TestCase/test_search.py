@@ -4,10 +4,10 @@ import sys
 
 sys.path.append('.')
 import re
+import conf
 import pytest
 from PageObject.searchpage import SearchPage
 from common.airtest_method import AirTestMethod
-from common.readconfig import ini
 from utils.logger import log
 
 
@@ -17,7 +17,7 @@ class TestSearch:
         """打开百度"""
         search = SearchPage(drivers)
         airtest = AirTestMethod(drivers)
-        search.get_url(ini.url)
+        search.get_url(conf.HOST)
         airtest.assert_template("百度首页logo")
 
     def test_001(self, drivers):
@@ -25,7 +25,6 @@ class TestSearch:
         search = SearchPage(drivers)
         search.input_search("selenium")
         search.click_search()
-        assert 0
         result = re.search(r'selenium', drivers.page_source)
         log.info(result)
         assert result

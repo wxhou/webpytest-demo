@@ -6,6 +6,9 @@ sys.path.append('.')
 import os
 from selenium.webdriver.common.by import By
 
+# 项目地址
+HOST = "https://www.baidu.com"
+
 # 项目目录
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
