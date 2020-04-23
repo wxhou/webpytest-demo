@@ -54,6 +54,14 @@ def pytest_runtest_makereport(item):
         report.extra = extra
         report.description = str(item.function.__doc__)
         report.nodeid = report.nodeid.encode("utf-8").decode("unicode_escape")
+        # report.nodeid = report.nodeid.encode("utf-8").decode("unicode_escape")
+        # 最新版本的pytest-html报告，已经可以实现自动转码了
+        # plugin.py文件中
+        # class TestResult:
+        #     def __init__(self, outcome, report, logfile, config):
+        #         self.test_id = report.nodeid.encode("utf-8").decode("unicode_escape")
+        #         if getattr(report, "when", "call") != "call":
+        #             self.test_id = "::".join([report.nodeid, report.when])
 
 
 @pytest.mark.optionalhook
