@@ -4,7 +4,6 @@ import sys
 
 sys.path.append('.')
 import re
-import conf
 import pytest
 from PageObject.searchpage import SearchPage
 from common.airtest_method import AirTestMethod
