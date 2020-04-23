@@ -48,12 +48,11 @@ def pytest_runtest_makereport(item):
             file_name = report.nodeid.replace("::", "_") + ".png"
             screen_img = _capture_screenshot()  # base64截图
             if file_name:
-                html = '<div><img src="data:image/png;base64,%s" alt="screenshot" style="width:1024px;height:768px;" ' \
+                html = '<div><img src="data:image/png;base64,%s" alt="screenshot" style="width:600px;height:300px;" ' \
                        'onclick="window.open(this.src)" align="right"/></div>' % screen_img
                 extra.append(pytest_html.extras.html(html))
         report.extra = extra
         report.description = str(item.function.__doc__)
-        report.nodeid = report.nodeid.encode("utf-8").decode("unicode_escape")
         # report.nodeid = report.nodeid.encode("utf-8").decode("unicode_escape")
         # 最新版本的pytest-html报告，已经可以实现自动转码了
         # plugin.py文件中

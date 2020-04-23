@@ -12,12 +12,12 @@ from Page.webpage import WebPage, base
 
 def assert_text_is_dom(driver, text):
     """验证文字在DOM中"""
-    assert WebPage(driver).element_exists(base['模糊匹配文字'] % text), f"文字{text}未在DOM中加载"
+    assert WebPage(driver).element_exists(base['模糊匹配文字'] % text), "文字{}未在DOM中加载".format(text)
 
 
 def assert_text_visible(driver, text):
     """验证文字是否可见"""
-    assert WebPage(driver).element_visible(base['模糊匹配文字'] % text), f"文字{text}不可见"
+    assert WebPage(driver).element_visible(base['模糊匹配文字'] % text), "文字{}不可见".format(text)
 
 
 if __name__ == '__main__':

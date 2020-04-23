@@ -26,7 +26,7 @@ class WebPage:
     def __init__(self, driver):
         # self.driver = WebChrome()
         self.driver = driver
-        self.timeout = 10
+        self.timeout = 20
         self.visible = 3
         self.wait = WebDriverWait(self.driver, self.timeout)
         self.action = ActionChains(self.driver)
@@ -191,19 +191,26 @@ class WebPage:
         js1 = 'document.getElementsByClassName("%s")[0].scroll%s=%s' % (element, func, number)
         self.driver.execute_script(js1)
 
-    def upload_file(self, locator, path, number=None):
-        """上传文件"""
-        name = get_image_name(path)[0]
+    def upload_file(self, locator, file_path, exists=None, number=None):
+        """上传文件
+        :param locator: 上传文件的元素 input[type=file]
+        :param file_path: 文件的路径
+        :param exists: 上传后要验证的元素
+        """
+        file_name = get_image_name(file_path)[0]
         ele = self.find_web_element(locator, number)
         self.focus(ele)
-        ele.send_keys(path)
-        log.info("正在上传文件：%s" % path)
+        ele.send_keys(file_path)
+        log.info("正在上传文件：%s" % file_path)
         start_time = timestamp()
-        while not self.element_exists(base['模糊匹配文字'] % name):
+        if file_path.endswith(('.jpg', '.png')):
+            exists = base['模糊匹配文字'] % file_name
+        while not self.element_exists(exists):
             sleep(0.5)
             if (timestamp() - start_time) > self.timeout:
                 raise TimeoutException("在元素【】上传文件【】失败" % ())
-        log.info("上传文件【%s】成功！" % path)
+        sleep(3)
+        log.info("上传文件【%s】成功！" % file_path)
 
     def element_screenshots(self, locator, path, number=None):
         """对某个元素进行截图,并返回截图路径"""

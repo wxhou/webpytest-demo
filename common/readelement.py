@@ -24,4 +24,4 @@ class Element:
 
 if __name__ == '__main__':
     login = Element('login')
-    print(login('登录'))
+    print(login['登录'])
