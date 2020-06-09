@@ -7,16 +7,16 @@ import os
 from selenium.webdriver.common.by import By
 
 # 项目目录
-BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 # 配置文件
-INI_PATH = os.path.join(BASE_DIR, 'config.ini')
+INI_PATH = os.path.join(BASE_DIR, 'config', 'config.ini')
 
 # 页面元素目录
 ELEMENT_PATH = os.path.join(BASE_DIR, 'PageElements')
 
 # airtest图像目录
-AIRTEST_IMAGE = os.path.join(BASE_DIR, 'airtest_image')
+AIR_IMAGE = os.path.join(BASE_DIR, 'airtest_img')
 
 # 日志目录
 LOG_PATH = os.path.join(BASE_DIR, 'logs')

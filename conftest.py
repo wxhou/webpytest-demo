@@ -3,8 +3,8 @@
 import sys
 
 sys.path.append('.')
-import conf
 import pytest
+from config import conf
 from py._xmlgen import html
 from airtest_selenium import WebChrome
 from utils.clear_data import clear_old_data

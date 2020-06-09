@@ -3,8 +3,8 @@
 import sys
 
 sys.path.append('.')
-import conf
 import configparser
+from config import conf
 
 HOST = 'HOST'
 

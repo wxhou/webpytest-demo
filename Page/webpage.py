@@ -5,13 +5,12 @@ from selenium.webdriver.common.action_chains import ActionChains
 from selenium.webdriver.common.touch_actions import TouchActions
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.select import Select
-from selenium.webdriver.common.by import By
 from selenium.common.exceptions import *
 from utils.images import element_screenshot, get_image_name
 from common.readelement import Element
 from utils.logger import log
 from utils.times import *
-import conf
+from config import conf
 
 """
 selenium基类
@@ -60,14 +59,14 @@ class WebPage:
     def find_web_element(self, locator, number=None):
         """寻找单个元素"""
         return WebPage.selector(
-            lambda *args: self.wait.until(lambda x: x.find_element(*args),
+            lambda *args: self.wait.until(EC.presence_of_element_located(args),
                                           message="查找单个元素%s失败！" % WebPage.element_value(locator, number)),
             locator, number)
 
     def find_web_elements(self, locator, number=None):
         """查找多个相同的元素"""
         return WebPage.selector(
-            lambda *args: self.wait.until(lambda x: x.find_elements(*args),
+            lambda *args: self.wait.until(EC.presence_of_all_elements_located(args),
                                           message="查找单个元素%s失败！" % WebPage.element_value(locator, number)),
             locator, number)
 
@@ -182,13 +181,14 @@ class WebPage:
         log.info("使用鼠标方法输入：%s" % text)
         self.action._actions.pop()  # 防止重复输入
 
-    def inline_scroll_bar(self, element, func='Left', number='10000'):
+    def inline_scroll_bar(self, class_name, func='Left', number='10000'):
         """
         内嵌滚动条（默认为向右滚动）
+        :param class_name: class_name
         :param func: ['Left','Top']
         :param number: ['10000','0']
         """
-        js1 = 'document.getElementsByClassName("%s")[0].scroll%s=%s' % (element, func, number)
+        js1 = 'document.getElementsByClassName("%s")[0].scroll%s=%s' % (class_name, func, number)
         self.driver.execute_script(js1)
 
     def upload_file(self, locator, file_path, exists=None, number=None):

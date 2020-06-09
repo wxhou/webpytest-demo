@@ -4,10 +4,9 @@ import sys
 
 sys.path.append('.')
 import re
-import conf
 import pytest
 from PageObject.searchpage import SearchPage
-from common.airtest_method import AirTestMethod
+from common.airtest_method import AirtestMethod
 from common.readconfig import ini
 from utils.logger import log
 
@@ -17,7 +16,7 @@ class TestSearch:
     def open_baidu(self, drivers):
         """打开百度"""
         search = SearchPage(drivers)
-        airtest = AirTestMethod(drivers)
+        airtest = AirtestMethod(drivers)
         search.get_url(ini.url)
         airtest.assert_template("百度首页logo")
 
