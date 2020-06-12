@@ -7,7 +7,7 @@ import pytest
 from config import conf
 from py._xmlgen import html
 from airtest_selenium import WebChrome
-from utils.clear_data import clear_old_data
+from tools.clear_data import clear_old_data
 from common.inspect_element import inspect_element
 
 driver = None

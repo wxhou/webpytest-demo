@@ -4,12 +4,12 @@ import re
 import os
 from PIL import Image
 from config import conf
-from utils.logger import log
-from utils.times import sleep
+from tools.logger import log
+from tools.times import sleep
 from airtest_selenium.exceptions import IsNotTemplateError
 
 
-def element_screenshot(locator, path):
+def area_screenshot(locator, path):
     """元素截图"""
     log.warning("需要截图的元素坐标%s" % locator.location)
     log.warning("需要截图的元素大小%s" % locator.size)

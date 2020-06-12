@@ -4,7 +4,7 @@ import sys
 
 sys.path.append('.')
 import configparser
-from config import conf
+from config.conf import INI_PATH
 
 HOST = 'HOST'
 
@@ -13,9 +13,8 @@ class ReadConfig:
     """配置文件"""
 
     def __init__(self):
-        self.config_path = conf.INI_PATH
         self.config = configparser.RawConfigParser()  # 当有%的符号时请使用Raw读取
-        self.config.read(self.config_path, encoding='utf-8')
+        self.config.read(INI_PATH, encoding='utf-8')
 
     def _get(self, section, option):
         """获取"""
@@ -24,7 +23,7 @@ class ReadConfig:
     def _set(self, section, option, value):
         """更新"""
         self.config.set(section, option, value)
-        with open(self.config_path, 'w') as f:
+        with open(INI_PATH, 'w') as f:
             self.config.write(f)
 
     @property

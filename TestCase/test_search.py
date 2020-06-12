@@ -5,10 +5,10 @@ import sys
 sys.path.append('.')
 import re
 import pytest
-from PageObject.searchpage import SearchPage
+from page_object.searchpage import SearchPage
 from common.airtest_method import AirtestMethod
 from common.readconfig import ini
-from utils.logger import log
+from tools.logger import log
 
 
 class TestSearch:

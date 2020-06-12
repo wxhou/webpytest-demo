@@ -13,7 +13,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 INI_PATH = os.path.join(BASE_DIR, 'config', 'config.ini')
 
 # 页面元素目录
-ELEMENT_PATH = os.path.join(BASE_DIR, 'PageElements')
+ELEMENT_PATH = os.path.join(BASE_DIR, 'page_element')
 
 # airtest图像目录
 AIR_IMAGE = os.path.join(BASE_DIR, 'airtest_img')

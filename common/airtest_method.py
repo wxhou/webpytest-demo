@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
 # -*- coding:utf-8 -*-
-from utils.images import get_airtest_image
+from tools.images import get_airtest_image
 from airtest.core.cv import Template
+from tools.times import sleep
 
 
 class AirtestMethod:
@@ -24,6 +25,7 @@ class AirtestMethod:
         """
         v = self.template(get_airtest_image(name))
         self.driver.airtest_touch(v)
+        sleep(3)
 
     def assert_template(self, name, msg=None):
         """验证网页中图片存在
