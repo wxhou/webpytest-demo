@@ -1,5 +1,8 @@
 #!/usr/bin/env python3
 # -*- coding:utf-8 -*-
+import sys
+sys.path.append('.')
+from airtest_selenium.proxy import WebChrome
 from tools.images import get_airtest_image
 from airtest.core.cv import Template
 from tools.times import sleep
