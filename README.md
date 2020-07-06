@@ -14,7 +14,5 @@
         ├── utils               ——第三方工具类
         ├── conftest.py         ——pytest胶水文件
         ├── README.md           ——自述文件
-        ├── report.html         ——报告文件
-        └── runcase.py          ——总执行文件
-        
+        └── report.html         ——报告文件
       

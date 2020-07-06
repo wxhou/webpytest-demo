@@ -5,12 +5,15 @@ import sys
 sys.path.append('.')
 import re
 import pytest
-from page_object.searchpage import SearchPage
-from common.airtest_method import AirtestMethod
-from common.readconfig import ini
+import allure
 from tools.logger import log
+from common.readconfig import ini
+from page_object.searchpage import SearchPage
+from basic.airtest_method import AirtestMethod
 
 
+
+@allure.feature("测试百度模块")
 class TestSearch:
     @pytest.fixture(scope='class', autouse=True)
     def open_baidu(self, drivers):
@@ -20,6 +23,7 @@ class TestSearch:
         search.get_url(ini.url)
         airtest.assert_template("百度首页logo")
 
+    @allure.story("搜索结果用例")
     @pytest.mark.parametrize("value", ["selenium", "你好"])
     def test_001(self, drivers, value):
         """搜索"""
@@ -30,6 +34,7 @@ class TestSearch:
         log.info(result)
         assert result
 
+    @allure.story("测试搜索候选用例")
     @pytest.mark.parametrize("value", ["selenium", "你好"])
     def test_002(self, drivers, value):
         """测试搜索候选"""

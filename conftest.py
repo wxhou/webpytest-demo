@@ -3,11 +3,15 @@
 import sys
 
 sys.path.append('.')
+import os
 import pytest
+import allure
+import base64
 from config import conf
 from py._xmlgen import html
 from airtest_selenium import WebChrome
-from tools.clear_data import clear_old_data
+from config.conf import SCREENSHOT_DIR
+from tools.times import timestamp, datetime_strftime
 from common.inspect_element import inspect_element
 
 driver = None
@@ -24,9 +28,6 @@ def drivers(request):
     def fn():
         print("当全部用例执行完之后：quit driver！")
         driver.quit()
-        clear_old_data(conf.TEST_SUITES)
-        clear_old_data(conf.BASE_DIR)
-
     request.addfinalizer(fn)
     return driver
 
@@ -45,22 +46,13 @@ def pytest_runtest_makereport(item):
     if report.when == 'call' or report.when == "setup":
         xfail = hasattr(report, 'wasxfail')
         if (report.skipped and xfail) or (report.failed and not xfail):
-            file_name = report.nodeid.replace("::", "_") + ".png"
             screen_img = _capture_screenshot()  # base64截图
-            if file_name:
+            if screen_img:
                 html = '<div><img src="data:image/png;base64,%s" alt="screenshot" style="width:600px;height:300px;" ' \
                        'onclick="window.open(this.src)" align="right"/></div>' % screen_img
                 extra.append(pytest_html.extras.html(html))
         report.extra = extra
         report.description = str(item.function.__doc__)
-        # report.nodeid = report.nodeid.encode("utf-8").decode("unicode_escape")
-        # 最新版本的pytest-html报告，已经可以实现自动转码了
-        # plugin.py文件中
-        # class TestResult:
-        #     def __init__(self, outcome, report, logfile, config):
-        #         self.test_id = report.nodeid.encode("utf-8").decode("unicode_escape")
-        #         if getattr(report, "when", "call") != "call":
-        #             self.test_id = "::".join([report.nodeid, report.when])
 
 
 @pytest.mark.optionalhook
@@ -84,9 +76,49 @@ def pytest_html_results_table_html(report, data):
         data.append(html.div('未捕获日志输出.', class_='empty log'))
 
 
+@pytest.mark.optionalhook
+def pytest_html_report_title(report):
+    report.title = "pytest示例项目测试报告"
+
+
+@pytest.mark.optionalhook
+def pytest_configure(config):
+    config._metadata.clear()
+    config._metadata['测试项目'] = "测试百度官网搜索"
+
+
+@pytest.mark.optionalhook
+def pytest_html_results_summary(prefix, summary, postfix):
+    # prefix.clear() # 清空summary中的内容
+    prefix.extend([html.p("所属部门: XX公司测试部")])
+    prefix.extend([html.p("测试执行人: 随风挥手")])
+
+
+def pytest_terminal_summary(terminalreporter, exitstatus, config):
+    """收集测试结果"""
+    result = {
+        "total": terminalreporter._numcollected,
+        'passed': len(terminalreporter.stats.get('passed', [])),
+        'failed': len(terminalreporter.stats.get('failed', [])),
+        'error': len(terminalreporter.stats.get('error', [])),
+        'skipped': len(terminalreporter.stats.get('skipped', [])),
+        # terminalreporter._sessionstarttime 会话开始时间
+        'total times': timestamp() - terminalreporter._sessionstarttime
+    }
+    print(result)
+
+
 def _capture_screenshot():
     '''
     截图保存为base64
-    :return: base64字符串
     '''
-    return driver.get_screenshot_as_base64()
+    if not os.path.exists(SCREENSHOT_DIR):
+        os.makedirs(SCREENSHOT_DIR)
+    now_time = datetime_strftime("%Y%m%d%H%M%S")
+    screen_path = os.path.join(SCREENSHOT_DIR, "{}.png".format(now_time))
+    driver.save_screenshot(screen_path)
+    allure.attach.file(screen_path, "测试失败截图...{}".format(
+        now_time), allure.attachment_type.PNG)
+    with open(screen_path, 'rb') as f:
+        imagebase64 = base64.b64encode(f.read())
+    return imagebase64.decode()

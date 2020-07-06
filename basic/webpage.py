@@ -72,7 +72,7 @@ class WebPage:
         """查找多个相同的元素"""
         return self.selector(
             lambda *args: self.wait.until(EC.presence_of_all_elements_located(args),
-                                          message="查找单个元素%s失败！" % self.element_value(locator, number)),
+                                          message="查找多个元素%s失败！" % self.element_value(locator, number)),
             locator, number)
 
     """
@@ -237,20 +237,6 @@ class WebPage:
         # 这里一定要加等待时间，否则会引起如下报错
         # Element is not currently visible and may not be manipulated
         return Select(ele)
-
-    def switch_to_frame(self, locator, number=None):
-        """切换iframe"""
-        log.info("切换最新的iframe")
-        return self.selector(lambda *args: self.wait.until(
-            EC.frame_to_be_available_and_switch_to_it(args)), locator, number)
-
-    def switch_windows_handle(self):
-        """切换最新的标签"""
-        now_handle1 = self.driver.current_window_handle
-        all_handle = self.driver.window_handles
-        self.driver.switch_to.window(all_handle[-1])
-        now_handle2 = self.driver.current_window_handle
-        assert now_handle1 != now_handle2, "切换标签失败!"
 
     def refresh(self):
         """刷新页面F5"""

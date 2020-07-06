@@ -16,7 +16,7 @@ class Logger:
             os.makedirs(log_path)
         self.logger = logging.getLogger()
         if not self.logger.handlers:  # 防止日志重复输出
-            self.logger.setLevel(logging.DEBUG)
+            self.logger.setLevel(logging.INFO)
 
             # 创建一个handle写入文件
             fh = logging.FileHandler(self.log_path, encoding='utf-8')

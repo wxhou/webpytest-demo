@@ -2,17 +2,22 @@
 # -*- coding:utf-8 -*-
 import sys
 sys.path.append('.')
-from airtest_selenium.proxy import WebChrome
+from basic.webpage import WebPage, sleep
+from config.conf import SCREENSHOT_DIR
 from tools.images import get_airtest_image
 from airtest.core.cv import Template
-from tools.times import sleep
+from airtest.core.settings import Settings as ST
 
 
-class AirtestMethod:
+# 设置airtest日志目录
+ST.LOG_DIR = SCREENSHOT_DIR
+
+
+class AirtestMethod(WebPage):
     """airtest-selenium方法"""
 
     def __init__(self, driver):
-        self.driver = driver
+        super().__init__(driver)
         self.size = self.driver.get_window_size()
         self.width = self.size['width']
         self.height = self.size['height']

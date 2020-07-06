@@ -9,7 +9,7 @@ import urllib3
 urllib3.disable_warnings()
 
 
-class Download:
+class Download(object):
     """下载"""
 
     def __init__(self, url, path, stream=False):

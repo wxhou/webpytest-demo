@@ -3,7 +3,7 @@
 import sys
 
 sys.path.append('.')
-from page.webpage import WebPage, base
+from basic.webpage import WebPage, base
 
 """
 断言文件

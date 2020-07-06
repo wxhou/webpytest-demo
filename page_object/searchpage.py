@@ -3,7 +3,7 @@
 import sys
 
 sys.path.append('.')
-from page.webpage import WebPage, sleep
+from basic.webpage import WebPage, sleep
 from common.readelement import Element
 
 login = Element('login')
@@ -20,8 +20,7 @@ class SearchPage(WebPage):
     def imagine(self):
         """搜索联想"""
         result_number = range(1, self.elements_num(search['候选']) + 1)
-        return map(lambda x: self.get_text(search['搜索候选'], number=x),
-                   result_number)
+        return [self.get_text(search['搜索候选'], number=x) for x in result_number]
 
     def click_search(self):
         """点击搜索"""
