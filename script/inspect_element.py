@@ -1,19 +1,16 @@
 #!/usr/bin/env python3
 # -*- coding:utf-8 -*-
-import sys
-
-sys.path.append('.')
 import os
 import yaml
-from tools.times import timestamp
-from config.conf import LOCATE_MODE, ELEMENT_PATH
+from utils.times import timestamp
+from config import element, LOCATE_MODE
 
 
-def inspect_element():
+def inspect_element(route):
     """审查所有的元素是否正确"""
     start_time = timestamp()
-    for i in os.listdir(ELEMENT_PATH):
-        _dir = os.path.join(ELEMENT_PATH, i)
+    for i in os.listdir():
+        _dir = os.path.join(route, i)
         if os.path.isfile(_dir):
             with open(_dir, encoding='utf-8') as f:
                 data = yaml.safe_load(f)
@@ -37,4 +34,4 @@ def inspect_element():
 
 
 if __name__ == '__main__':
-    inspect_element()
+    inspect_element(element['baidu'])

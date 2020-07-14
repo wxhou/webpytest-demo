@@ -6,17 +6,17 @@ from selenium.webdriver.common.touch_actions import TouchActions
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.select import Select
 from selenium.common.exceptions import *
-from tools.images import area_screenshot, get_image_name
+from utils.images import area_screenshot, get_image_name
 from common.readelement import Element
-from config.conf import LOCATE_MODE
-from tools.logger import log
-from tools.times import *
+from config import LOCATE_MODE, element
+from utils.logger import log
+from utils.times import *
 
 """
 selenium基类
 本文件存放了selenium基类的深度封装方法
 """
-base = Element('base')
+base = Element(element['baidu'], 'base')
 
 
 class WebPage:

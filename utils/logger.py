@@ -1,12 +1,9 @@
 #!/usr/bin/env python3
 # -*- coding:utf-8 -*-
-import sys
-
-sys.path.append('.')
 import os
 import logging
-from config.conf import LOG_PATH
-from tools.times import datetime_strftime
+from config import LOG_PATH
+from utils.times import datetime_strftime
 
 
 class Logger:

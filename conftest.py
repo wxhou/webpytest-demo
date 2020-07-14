@@ -1,18 +1,13 @@
 #!/usr/bin/env python3
 # -*- coding:utf-8 -*-
-import sys
-
-sys.path.append('.')
 import os
 import pytest
 import allure
 import base64
-from config import conf
 from py._xmlgen import html
 from airtest_selenium import WebChrome
-from config.conf import SCREENSHOT_DIR
-from tools.times import timestamp, datetime_strftime
-from common.inspect_element import inspect_element
+from config import SCREENSHOT_DIR
+from utils.times import timestamp, datetime_strftime
 
 driver = None
 
@@ -20,7 +15,6 @@ driver = None
 @pytest.fixture(scope='session', autouse=True)
 def drivers(request):
     global driver
-    inspect_element()
     if driver is None:
         driver = WebChrome()
         driver.maximize_window()
@@ -28,6 +22,7 @@ def drivers(request):
     def fn():
         print("当全部用例执行完之后：quit driver！")
         driver.quit()
+
     request.addfinalizer(fn)
     return driver
 
@@ -109,9 +104,9 @@ def pytest_terminal_summary(terminalreporter, exitstatus, config):
 
 
 def _capture_screenshot():
-    '''
+    """
     截图保存为base64
-    '''
+    """
     if not os.path.exists(SCREENSHOT_DIR):
         os.makedirs(SCREENSHOT_DIR)
     now_time = datetime_strftime("%Y%m%d%H%M%S")

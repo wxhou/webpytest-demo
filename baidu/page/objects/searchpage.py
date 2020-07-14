@@ -1,16 +1,15 @@
 #!/usr/bin/env python3
 # -*- coding:utf-8 -*-
-import sys
-
-sys.path.append('.')
-from basic.webpage import WebPage, sleep
+from config import element
+from utils.times import sleep
 from common.readelement import Element
+from baidu.page.basepage import BasePage
 
-login = Element('login')
-search = Element('search')
+login = Element(element['baidu'], 'login')
+search = Element(element['baidu'], 'search')
 
 
-class SearchPage(WebPage):
+class SearchPage(BasePage):
     def input_search(self, content):
         """输入搜索"""
         self.input_text(search['搜索框'], text=content)
@@ -39,4 +38,4 @@ class SearchPage(WebPage):
 
 
 if __name__ == '__main__':
-    pass
+    print(login['密码'])

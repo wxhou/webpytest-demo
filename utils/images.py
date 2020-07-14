@@ -1,31 +1,18 @@
 #!/usr/bin/env python3
 # -*- coding:utf-8 -*-
-import sys
-sys.path.append('.')
 import re
-import os
 import math
 import operator
 from PIL import Image
 from functools import reduce
-from tools.logger import log
-from tools.times import sleep
-from config.conf import PAGE_IMAGE
-from airtest_selenium.exceptions import IsNotTemplateError
+from utils.logger import log
+from utils.times import sleep
 
 
 def get_image_name(string):
     """获取文件名称"""
     pattern = re.compile(r'([^<>/\\\|:""\*\?]+)\.\w+$')
     return pattern.findall(string)
-
-
-def get_airtest_image(name):
-    """获取airtest图像"""
-    path = os.path.join(PAGE_IMAGE, "{}.png".format(name))
-    if os.path.exists(path):
-        return path
-    raise IsNotTemplateError("验证图片不存在：{}".format(path))
 
 
 def area_screenshot(locator, path):
