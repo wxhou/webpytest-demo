@@ -3,7 +3,7 @@
 from config import element
 from utils.times import sleep
 from common.readelement import Element
-from baidu.page.basepage import BasePage
+from apps.baidu.page.basepage import BasePage
 
 login = Element(element['baidu'], 'login')
 search = Element(element['baidu'], 'search')

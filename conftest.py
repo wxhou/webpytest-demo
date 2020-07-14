@@ -5,8 +5,8 @@ import pytest
 import allure
 import base64
 from py._xmlgen import html
-from airtest_selenium import WebChrome
 from config import SCREENSHOT_DIR
+from airtest_selenium import WebChrome
 from utils.times import timestamp, datetime_strftime
 
 driver = None

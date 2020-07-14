@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 # -*- coding:utf-8 -*-
 import os
-from common.readelement import Element
 from common.readconfig import ReadConfig
 from selenium.webdriver.common.by import By
 
@@ -25,7 +24,8 @@ LOCATE_MODE = {
 
 # 测试项目应用管理
 apps = {
-    'baidu': os.path.join(BASE_DIR, 'baidu'),
+
+    'baidu': os.path.join(BASE_DIR, 'apps', 'baidu'),
 }
 
 # 测试项目配置文件应用管理
@@ -36,6 +36,11 @@ ini = {
 # 测试项目元素文件应用管理
 element = {
     "baidu": os.path.join(apps['baidu'], 'page', 'elements')
+}
+
+# airimages图片管理
+airimages = {
+    'baidu': os.path.join(apps['baidu'], 'page', 'images')
 }
 
 if __name__ == '__main__':
