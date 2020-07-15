@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-from config import element
+from config import apps
 from utils.times import *
 from utils.logger import log
 from core.webpage import WebPage
@@ -8,11 +8,19 @@ from common.readelement import Element
 from utils.images import area_screenshot, get_image_name
 from selenium.common.exceptions import TimeoutException
 
-base = Element(element['baidu'], 'base')
+base = Element(apps['apps'], 'base')
 
 
 class NovaPage(WebPage):
     """WebPage的延伸方法"""
+
+    def assert_text_dom(self, text):
+        """验证文字在DOM中"""
+        assert self.is_exists(base['模糊匹配文字'] % text), f"文字{text}未在DOM中加载"
+
+    def assert_text_visible(self, text):
+        """验证文字是否可见"""
+        assert self.is_visible(base['模糊匹配文字'] % text), f"文字{text}不可见"
 
     def upload_file(self, locator, file_path, exists=None, number=None):
         """上传文件
@@ -44,3 +52,7 @@ class NovaPage(WebPage):
         area_screenshot(ele, path)
         self.driver.implicitly_wait(1)
         log.info("截图的路径是：%s" % path)
+
+
+if __name__ == '__main__':
+    print(base['模糊匹配文字'])

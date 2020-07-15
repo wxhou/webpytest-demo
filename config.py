@@ -24,7 +24,7 @@ LOCATE_MODE = {
 
 # 测试项目应用管理
 apps = {
-
+    'apps': os.path.join(BASE_DIR, 'apps'),
     'baidu': os.path.join(BASE_DIR, 'apps', 'baidu'),
 }
 
