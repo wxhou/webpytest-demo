@@ -72,25 +72,25 @@ class WebPage:
     def find_element(self, args: tuple):
         """寻找单个元素"""
         return self.wait.until(EC.presence_of_element_located(args),
-                               message="查找单个元素{}失败！".format(args))
+                               message="查找单个元素失败！{}".format(args))
 
     def find_elements(self, args: tuple):
         """查找多个相同的元素"""
         return self.wait.until(EC.presence_of_all_elements_located(args),
-                               message="查找多个元素{}失败！".format(args))
+                               message="查找多个元素失败！{}".format(args))
 
     """
     获取函数
     """
 
     @logger(msg="元素个数:{}")
-    def elements_num(self, locator):
+    def get_nums(self, locator):
         """获取相同元素的个数"""
         values = getElement(locator)
         number = len(self.find_elements(values))
         return number
 
-    @logger("元素文本：{}")
+    @logger(msg="元素文本：{}")
     def get_text(self, locator, number=None):
         """获取当前的text"""
         values = getElement(locator, number)
@@ -116,17 +116,11 @@ class WebPage:
         except TimeoutException:
             return False
 
-    def is_page_refresh(self, locator, number=None):
+    def is_refresh(self, locator, number=None):
         """判断页面是否刷新"""
         values = getElement(locator, number)
         ele = self.find_element(values)
         return EC.staleness_of(ele)
-
-    @logger(msg="文本<{}>在元素中：{}")
-    def text_in_element(self, locator, text, number=None):
-        """检查某段文本是否在元素中"""
-        values = getElement(locator, number)
-        return EC.text_to_be_present_in_element(values, text)(self.driver)
 
     @logger(msg="是否选中：{}")
     def is_selected(self, locator, number=None):
@@ -134,7 +128,13 @@ class WebPage:
         values = getElement(locator, number)
         return self.wait.until(EC.element_located_selection_state_to_be(values, True))
 
-    @logger("弹窗提示：{}")
+    @logger(msg="文本<{}>在元素中：{}")
+    def text_in_element(self, locator, text, number=None):
+        """检查某段文本是否在元素中"""
+        values = getElement(locator, number)
+        return EC.text_to_be_present_in_element(values, text)(self.driver)
+
+    @logger(msg="弹窗提示：{}")
     def alert_text_exists(self):
         """判断弹框是否出现，并返回弹框的文字"""
         alert = EC.alert_is_present()(self.driver)
@@ -144,11 +144,11 @@ class WebPage:
 
     """操作函数"""
 
-    def focus(self, element):  # 该函数的编写来源于robot-framework-selenium
+    def focus(self, element):
         """聚焦元素"""
         self.driver.execute_script("arguments[0].focus();", element)
 
-    @logger("清空输入框:{}")
+    @logger(msg="清空输入框：{}")
     def clear(self, locator, number=None):
         """清空输入框"""
         values = getElement(locator, number)
@@ -157,7 +157,7 @@ class WebPage:
         ele.clear()
         self.driver.implicitly_wait(1)
 
-    @logger("输入文本：{}")
+    @logger(msg="输入文本：{}")
     def input_text(self, locator, text, number=None):
         """输入(输入前先清空)"""
         sleep(0.5)
@@ -169,7 +169,7 @@ class WebPage:
         ele.send_keys(text)
         return text
 
-    @logger("点击元素")
+    @logger(msg="点击元素")
     def is_click(self, locator, number=None):
         """点击"""
         values = getElement(locator, number)
@@ -188,7 +188,7 @@ class WebPage:
         self.action.pause(0.5).click(element).pause(0.5).perform()
         self.driver.implicitly_wait(1)
 
-    @logger("action输入:{}")
+    @logger(msg="action输入：{}")
     def action_input(self, locator, text, number=None):
         """action的输入方法"""
         values = getElement(locator, number)
@@ -196,7 +196,6 @@ class WebPage:
         self.focus(element)
         self.action.pause(0.5).click(element).pause(0.5).send_keys(text)
         self.action.perform()
-        log.info("使用：%s" % text)
         self.action._actions.pop()  # 防止重复输入
         return text
 
@@ -220,10 +219,10 @@ class WebPage:
         # Element is not currently visible and may not be manipulated
         return Select(ele)
 
+    @logger(msg="刷新当前网页!")
     def refresh(self):
         """刷新页面F5"""
         self.driver.refresh()
-        log.info("刷新当前网页!")
         self.driver.implicitly_wait(30)
 
 

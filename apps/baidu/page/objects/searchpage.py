@@ -18,7 +18,7 @@ class SearchPage(BasePage):
     @property
     def imagine(self):
         """搜索联想"""
-        result_number = range(1, self.elements_num(search['候选']) + 1)
+        result_number = range(1, self.get_nums(search['候选']) + 1)
         return [self.get_text(search['搜索候选'], number=x) for x in result_number]
 
     def click_search(self):

@@ -39,7 +39,7 @@ class Logger:
 
     @property
     def fmt(self):
-        return '%(levelname)s\t%(asctime)s\t[%(filename)s:%(lineno)d]\t%(message)s'
+        return '%(levelname)s %(asctime)s [%(filename)s:%(lineno)d] %(message)s'
 
 
 log = Logger().logger

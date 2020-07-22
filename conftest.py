@@ -1,13 +1,10 @@
 #!/usr/bin/env python3
 # -*- coding:utf-8 -*-
-import os
 import pytest
-import allure
-import base64
 from py._xmlgen import html
-from config import SCREENSHOT_DIR
+from utils.times import timestamp
+from core.novapage import NovaPage
 from airtest_selenium import WebChrome
-from utils.times import timestamp, datetime_strftime
 
 driver = None
 
@@ -17,7 +14,6 @@ def drivers(request):
     global driver
     if driver is None:
         driver = WebChrome()
-        driver.maximize_window()
 
     def fn():
         print("当全部用例执行完之后：quit driver！")
@@ -107,13 +103,5 @@ def _capture_screenshot():
     """
     截图保存为base64
     """
-    if not os.path.exists(SCREENSHOT_DIR):
-        os.makedirs(SCREENSHOT_DIR)
-    now_time = datetime_strftime("%Y%m%d%H%M%S")
-    screen_path = os.path.join(SCREENSHOT_DIR, "{}.png".format(now_time))
-    driver.save_screenshot(screen_path)
-    allure.attach.file(screen_path, "测试失败截图...{}".format(
-        now_time), allure.attachment_type.PNG)
-    with open(screen_path, 'rb') as f:
-        imagebase64 = base64.b64encode(f.read())
-    return imagebase64.decode()
+    nova = NovaPage(driver)
+    return nova.capture_screenshot()
