@@ -3,8 +3,8 @@
 from config import apps
 from utils.times import *
 from utils.logger import log
-from core.webpage import WebPage
 from common.readelement import Element
+from core.webpage import WebPage, getElement
 from utils.images import area_screenshot, get_image_name
 from selenium.common.exceptions import TimeoutException
 
@@ -30,7 +30,8 @@ class NovaPage(WebPage):
         :param number: 元素index
         """
         file_name = get_image_name(file_path)[0]
-        ele = self.find_element(locator, number)
+        values = getElement(locator, number)
+        ele = self.find_element(values)
         self.focus(ele)
         ele.send_keys(file_path)
         log.info("正在上传文件：%s" % file_path)
@@ -46,7 +47,8 @@ class NovaPage(WebPage):
 
     def element_screenshot(self, locator, path, number=None):
         """对某个元素进行截图,并返回截图路径"""
-        ele = self.find_element(locator, number)
+        values = getElement(locator, number)
+        ele = self.find_element(values)
         self.focus(ele)  # 元素不可见则聚焦
         self.driver.save_screenshot(path)
         area_screenshot(ele, path)

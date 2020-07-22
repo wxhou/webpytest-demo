@@ -2,6 +2,7 @@
 # -*- coding:utf-8 -*-
 import os
 import logging
+from functools import wraps
 from config import LOG_PATH
 from utils.times import datetime_strftime
 
@@ -44,4 +45,4 @@ class Logger:
 log = Logger().logger
 
 if __name__ == '__main__':
-    log.info('你好')
+    log.info('你好', '12344')
