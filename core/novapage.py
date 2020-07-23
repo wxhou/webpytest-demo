@@ -67,7 +67,7 @@ class NovaPage(WebPage):
         _now = datetime_strftime("%Y%m%d%H%M%S")
         screen_path = os.path.join(SCREENSHOT_DIR, "{}.png".format(_now))
         self.driver.save_screenshot(screen_path)
-        allure.attach.file(screen_path, "测试失败截图...{}".format(
+        allure.attach.file(screen_path, "测试失败截图{}".format(
             now_time), allure.attachment_type.PNG)
         with open(screen_path, 'rb') as f:
             imagebase64 = base64.b64encode(f.read())

@@ -11,7 +11,7 @@ from selenium.common.exceptions import *
 from config import LOCATE_MODE
 from utils.logger import log
 from utils.times import *
-from functools import wraps
+import functools
 
 
 def getElement(locator, number=None):
@@ -19,23 +19,24 @@ def getElement(locator, number=None):
     pattern, value = locator.split("==")
     element_value = value % number if number else value
     locate_mode = LOCATE_MODE[pattern]
-    log.info("定位方式：{} 元素值：{}".format(locate_mode, element_value))
     return locate_mode, element_value
 
 
-def logger(msg):
+def logger(func=None, msg=None):
     """selenium日志"""
+    if func is None:
+        return functools.partial(logger, msg=msg)
 
-    def wrappers(func):
-        @wraps(func)
-        def deco(*args, **kwargs):
-            result = func(*args, **kwargs)
+    @functools.wraps(func)
+    def wrapper(*args, **kwargs):
+        result = func(*args, **kwargs)
+        log.info(func.__name__ + func.__doc__)
+        log.info(f"参数：{args[1:]}{kwargs}")
+        if msg:
             log.info(msg.format(result))
-            return result
+        return result
 
-        return deco
-
-    return wrappers
+    return wrapper
 
 
 class WebPage:
@@ -51,6 +52,7 @@ class WebPage:
         self.action = ActionChains(self.driver)
         self.touch = TouchActions(self.driver)
 
+    @logger
     def get_url(self, url, title=None):
         """打开网址并验证"""
         self.driver.maximize_window()
@@ -58,7 +60,6 @@ class WebPage:
         try:
             self.driver.get(url)
             self.driver.implicitly_wait(10)
-            log.info("\t打开网页：%s" % url)
         except TimeoutException:
             raise ("打开%s超时,请检查网络或网址服务器" % url)
         if title:
@@ -99,6 +100,7 @@ class WebPage:
 
     """判断函数"""
 
+    @logger
     def is_exists(self, locator, number=None):
         """元素是否存在(DOM)"""
         try:
@@ -107,6 +109,7 @@ class WebPage:
         except NoSuchElementException:
             return False
 
+    @logger
     def is_visible(self, locator, number=None):
         """元素是否可见"""
         try:
@@ -116,6 +119,7 @@ class WebPage:
         except TimeoutException:
             return False
 
+    @logger
     def is_refresh(self, locator, number=None):
         """判断页面是否刷新"""
         values = getElement(locator, number)
@@ -148,7 +152,7 @@ class WebPage:
         """聚焦元素"""
         self.driver.execute_script("arguments[0].focus();", element)
 
-    @logger(msg="清空输入框：{}")
+    @logger
     def clear(self, locator, number=None):
         """清空输入框"""
         values = getElement(locator, number)
@@ -157,7 +161,7 @@ class WebPage:
         ele.clear()
         self.driver.implicitly_wait(1)
 
-    @logger(msg="输入文本：{}")
+    @logger
     def input_text(self, locator, text, number=None):
         """输入(输入前先清空)"""
         sleep(0.5)
@@ -169,7 +173,7 @@ class WebPage:
         ele.send_keys(text)
         return text
 
-    @logger(msg="点击元素")
+    @logger
     def is_click(self, locator, number=None):
         """点击"""
         values = getElement(locator, number)
@@ -179,7 +183,7 @@ class WebPage:
         ele.click()
         sleep()
 
-    @logger(msg="鼠标点击")
+    @logger
     def action_click(self, locator, number=None):
         """使用鼠标点击"""
         values = getElement(locator, number)
@@ -188,7 +192,7 @@ class WebPage:
         self.action.pause(0.5).click(element).pause(0.5).perform()
         self.driver.implicitly_wait(1)
 
-    @logger(msg="action输入：{}")
+    @logger
     def action_input(self, locator, text, number=None):
         """action的输入方法"""
         values = getElement(locator, number)
@@ -199,6 +203,7 @@ class WebPage:
         self.action._actions.pop()  # 防止重复输入
         return text
 
+    @logger
     def internal_scroll_bar(self, class_name, func='Left', number='10000'):
         """
         内部滚动条（默认为向右滚动）
@@ -209,6 +214,7 @@ class WebPage:
         js1 = 'document.getElementsByClassName("%s")[0].scroll%s=%s' % (class_name, func, number)
         self.driver.execute_script(js1)
 
+    @logger
     def select_drop_down(self, locator, number=None):
         """选择下拉框"""
         values = getElement(locator, number)
@@ -219,7 +225,7 @@ class WebPage:
         # Element is not currently visible and may not be manipulated
         return Select(ele)
 
-    @logger(msg="刷新当前网页!")
+    @logger
     def refresh(self):
         """刷新页面F5"""
         self.driver.refresh()
