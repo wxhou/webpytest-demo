@@ -8,35 +8,9 @@ from selenium.webdriver.common.touch_actions import TouchActions
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.select import Select
 from selenium.common.exceptions import *
-from config import LOCATE_MODE
-from utils.logger import log
+from common.readelement import getElement
+from utils.logger import logger
 from utils.times import *
-import functools
-
-
-def getElement(locator, number=None):
-    """获取元素"""
-    pattern, value = locator.split("==")
-    element_value = value % number if number else value
-    locate_mode = LOCATE_MODE[pattern]
-    return locate_mode, element_value
-
-
-def logger(func=None, msg=None):
-    """selenium日志"""
-    if func is None:
-        return functools.partial(logger, msg=msg)
-
-    @functools.wraps(func)
-    def wrapper(*args, **kwargs):
-        result = func(*args, **kwargs)
-        log.info(func.__name__ + func.__doc__)
-        log.info(f"参数：{args[1:]}{kwargs}")
-        if msg:
-            log.info(msg.format(result))
-        return result
-
-    return wrapper
 
 
 class WebPage:
@@ -64,7 +38,8 @@ class WebPage:
             raise ("打开%s超时,请检查网络或网址服务器" % url)
         if title:
             title2 = self.driver.title
-            assert EC.title_is(title)(self.driver), "网页title不正确，应为%s，实为%s" % (title, title2)
+            assert EC.title_is(title)(
+                self.driver), "网页title不正确，应为%s，实为%s" % (title, title2)
 
     """
     基础函数
@@ -114,7 +89,8 @@ class WebPage:
         """元素是否可见"""
         try:
             values = getElement(locator, number)
-            WebDriverWait(self.driver, self.visible).until(EC.visibility_of_element_located(values))
+            WebDriverWait(self.driver, self.visible).until(
+                EC.visibility_of_element_located(values))
             return True
         except TimeoutException:
             return False
@@ -211,7 +187,8 @@ class WebPage:
         :param func: ['Left','Top']
         :param number: ['10000','0']
         """
-        js1 = 'document.getElementsByClassName("%s")[0].scroll%s=%s' % (class_name, func, number)
+        js1 = 'document.getElementsByClassName("%s")[0].scroll%s=%s' % (
+            class_name, func, number)
         self.driver.execute_script(js1)
 
     @logger
