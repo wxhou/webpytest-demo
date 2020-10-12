@@ -1,5 +1,5 @@
-pytest --alluredir allure-results --clean-alluredir
+call pytest --alluredir allure-results --clean-alluredir
 
-allure generate allure-results -c -o allure-report
+call allure generate allure-results -c -o allure-report
 
-allure open allure-report
+call allure open allure-report
