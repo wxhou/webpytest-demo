@@ -85,6 +85,13 @@ def pytest_html_results_summary(prefix, summary, postfix):
     prefix.extend([html.p("测试执行人: 随风挥手")])
 
 
+def pytest_collection_modifyitems(items):
+    # item表示每个测试用例，解决用例名称中文显示问题
+    for item in items:
+        item.name = item.name.encode("utf-8").decode("unicode-escape")
+        item._nodeid = item._nodeid.encode("utf-8").decode("unicode-escape")
+
+
 def pytest_terminal_summary(terminalreporter, exitstatus, config):
     """收集测试结果"""
     result = {

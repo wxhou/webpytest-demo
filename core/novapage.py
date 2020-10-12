@@ -4,9 +4,10 @@ import os
 import allure
 import base64
 from utils.times import *
+from utils.logger import logger
+from core.webpage import WebPage
 from config import apps, SCREENSHOT_DIR
-from common.readelement import Element
-from core.webpage import WebPage, getElement, logger
+from common.readelement import Element, getElement
 from utils.images import area_screenshot, get_image_name
 from selenium.common.exceptions import TimeoutException
 
@@ -68,7 +69,7 @@ class NovaPage(WebPage):
         screen_path = os.path.join(SCREENSHOT_DIR, "{}.png".format(_now))
         self.driver.save_screenshot(screen_path)
         allure.attach.file(screen_path, "测试失败截图{}".format(
-            now_time), allure.attachment_type.PNG)
+            now_time()), allure.attachment_type.PNG)
         with open(screen_path, 'rb') as f:
             imagebase64 = base64.b64encode(f.read())
         return imagebase64.decode()

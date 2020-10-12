@@ -2,16 +2,13 @@
 # -*- coding:utf-8 -*-
 import os
 import logging
-from functools import wraps
+import functools
 from config import LOG_PATH
 from utils.times import datetime_strftime
 
 
 class Logger:
     def __init__(self):
-        log_path = self.log_path[:self.log_path.rfind('/')]
-        if not os.path.exists(log_path):
-            os.makedirs(log_path)
         self.logger = logging.getLogger()
         if not self.logger.handlers:  # 防止日志重复输出
             self.logger.setLevel(logging.INFO)
@@ -35,6 +32,8 @@ class Logger:
 
     @property
     def log_path(self):
+        if not os.path.exists(LOG_PATH):
+            os.makedirs(LOG_PATH)
         return os.path.join(LOG_PATH, '{}.log'.format(datetime_strftime()))
 
     @property
@@ -44,5 +43,23 @@ class Logger:
 
 log = Logger().logger
 
+
+def logger(func=None, msg=None):
+    """日志"""
+    if func is None:
+        return functools.partial(logger, msg=msg)
+
+    @functools.wraps(func)
+    def wrapper(*args, **kwargs):
+        result = func(*args, **kwargs)
+        log.info(func.__name__ + func.__doc__)
+        log.info(f"参数：{args[1:]}{kwargs}")
+        if msg:
+            log.info(msg.format(result))
+        return result
+
+    return wrapper
+
+
 if __name__ == '__main__':
-    log.info('你好', '12344')
+    log.info("你好")

@@ -2,6 +2,7 @@
 # -*- coding:utf-8 -*-
 import os
 import yaml
+from config import LOCATE_MODE
 
 
 class Element:
@@ -16,6 +17,14 @@ class Element:
 
     def __getitem__(self, item):
         return self.data[item]
+
+
+def getElement(locator, number=None):
+    """获取元素"""
+    pattern, value = locator.split("==")
+    locate_mode = LOCATE_MODE[pattern]
+    element_value = value % number if number else value
+    return locate_mode, element_value
 
 
 if __name__ == '__main__':
