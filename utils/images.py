@@ -37,7 +37,7 @@ def image_contrast(img1, img2, threshold=7):
     h2 = image2.histogram()
 
     result = math.sqrt(reduce(operator.add, list(
-        map(lambda a, b: (a - b) ** 2, h1, h2))) / len(h1))
+        map(lambda x, y: (x - y) ** 2, h1, h2))) / len(h1))
     log.info("对比结果为%s" % result)
     return result <= threshold
 

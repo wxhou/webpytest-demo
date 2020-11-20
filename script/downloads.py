@@ -31,7 +31,7 @@ class Download(object):
         with open(self.path, 'wb') as f:
             for chunk in self.r.iter_content(chunk_size=chunk_size):
                 f.write(chunk)
-                data_count = data_count + len(chunk)
+                data_count += len(chunk)
                 now_jd = (data_count / content_size) * 100
                 print("\r 文件下载进度：%d%%(%d/%d) - %s" % (now_jd, data_count, content_size, self.path), end=" ")
 

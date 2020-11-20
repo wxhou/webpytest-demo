@@ -3,13 +3,14 @@
 import os
 import allure
 import base64
+from selenium.common.exceptions import TimeoutException
+
 from utils.times import *
 from utils.logger import logger
 from core.webpage import WebPage
-from config import apps, SCREENSHOT_DIR
+from config.conf import apps, SCREENSHOT_DIR
 from common.readelement import Element, getElement
 from utils.images import area_screenshot, get_image_name
-from selenium.common.exceptions import TimeoutException
 
 base = Element(apps['apps'], 'base')
 

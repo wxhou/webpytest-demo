@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 # -*- coding:utf-8 -*-
-from config import SCREENSHOT_DIR
-from core.webpage import WebPage, sleep
 from airtest.core.cv import Template
 from airtest.core.settings import Settings as ST
+from config.conf import SCREENSHOT_DIR
+from core.webpage import WebPage, sleep
 
 # 设置airtest日志目录
 ST.LOG_DIR = SCREENSHOT_DIR
@@ -13,7 +13,7 @@ class AirtestMethod(WebPage):
     """airtest-selenium方法"""
 
     def __init__(self, driver):
-        super().__init__(driver)
+        super(AirtestMethod, self).__init__(driver)
         self.size = self.driver.get_window_size()
         self.width = self.size['width']
         self.height = self.size['height']

@@ -6,7 +6,7 @@ import allure
 from utils.logger import log
 from common.readimage import get_image
 from core.aircore import AirtestMethod
-from config import ini, apps, airimages
+from config.conf import ini, airimages
 from apps.baidu.page.objects.searchpage import SearchPage
 
 

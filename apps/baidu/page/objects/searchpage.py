@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 # -*- coding:utf-8 -*-
-from config import element
+from config.conf import element
 from utils.times import sleep
 from common.readelement import Element
-from apps.baidu.page.basepage import BasePage
+from apps.baidu.page import BasePage
 
 login = Element(element['baidu'], 'login')
 search = Element(element['baidu'], 'search')
@@ -18,7 +18,7 @@ class SearchPage(BasePage):
     @property
     def imagine(self):
         """搜索联想"""
-        result_number = range(1, self.get_nums(search['候选']) + 1)
+        result_number = range(1, self.get_num(search['候选']) + 1)
         return [self.get_text(search['搜索候选'], number=x) for x in result_number]
 
     def click_search(self):

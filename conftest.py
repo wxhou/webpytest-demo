@@ -2,9 +2,10 @@
 # -*- coding:utf-8 -*-
 import pytest
 from py._xmlgen import html
+from airtest_selenium import WebChrome
+
 from utils.times import timestamp
 from core.novapage import NovaPage
-from airtest_selenium import WebChrome
 
 driver = None
 

@@ -8,6 +8,7 @@ from selenium.webdriver.common.touch_actions import TouchActions
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.select import Select
 from selenium.common.exceptions import *
+
 from common.readelement import getElement
 from utils.logger import logger
 from utils.times import *
@@ -60,7 +61,7 @@ class WebPage:
     """
 
     @logger(msg="元素个数:{}")
-    def get_nums(self, locator):
+    def get_num(self, locator):
         """获取相同元素的个数"""
         values = getElement(locator)
         number = len(self.find_elements(values))

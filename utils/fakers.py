@@ -7,8 +7,12 @@ class Fakers(object):
     """假数据生成"""
 
     def __init__(self):
-        super().__init__()
+        super(Fakers, self).__init__()
         self.faker = Faker('zh_CN')
+
+    def __getattr__(self, item):
+        handler = getattr(self.faker, item)
+        return handler()
 
     @property
     def mobile_number(self):

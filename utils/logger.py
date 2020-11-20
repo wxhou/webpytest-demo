@@ -3,7 +3,7 @@
 import os
 import logging
 import functools
-from config import LOG_PATH
+from config.conf import LOG_PATH
 from utils.times import datetime_strftime
 
 
@@ -46,7 +46,7 @@ log = Logger().logger
 
 def logger(func=None, msg=None):
     """日志"""
-    if func is None:
+    if not func:
         return functools.partial(logger, msg=msg)
 
     @functools.wraps(func)

@@ -2,7 +2,7 @@
 # -*- coding:utf-8 -*-
 import os
 import yaml
-from config import LOCATE_MODE
+from config.conf import LOCATE_MODE
 
 
 class Element:
@@ -22,9 +22,8 @@ class Element:
 def getElement(locator, number=None):
     """获取元素"""
     pattern, value = locator.split("==")
-    locate_mode = LOCATE_MODE[pattern]
     element_value = value % number if number else value
-    return locate_mode, element_value
+    return LOCATE_MODE[pattern], element_value
 
 
 if __name__ == '__main__':
