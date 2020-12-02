@@ -13,7 +13,7 @@ def runner_time(func):
         start = timestamp()
         res = func(*args, **kwargs)
         time_spent = timestamp() - start
-        print("done！用时%.3f秒！" % time_spent)
+        print("Done！用时%.3f秒！" % time_spent)
         return res
 
     return wrapper

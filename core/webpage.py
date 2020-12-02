@@ -14,7 +14,7 @@ from utils.logger import logger
 from utils.times import *
 
 
-class WebPage:
+class WebPage(object):
     """selenium基类"""
 
     def __init__(self, driver):
@@ -46,15 +46,17 @@ class WebPage:
     基础函数
     """
 
-    def find_element(self, args: tuple):
+    def find_element(self, *args, **kwargs):
         """寻找单个元素"""
-        return self.wait.until(EC.presence_of_element_located(args),
-                               message="查找单个元素失败！{}".format(args))
+        values = getElement(*args, **kwargs)
+        return self.wait.until(EC.presence_of_element_located(values),
+                               message="查找单个元素失败！{}".format(values))
 
-    def find_elements(self, args: tuple):
+    def find_elements(self, *args, **kwargs):
         """查找多个相同的元素"""
-        return self.wait.until(EC.presence_of_all_elements_located(args),
-                               message="查找多个元素失败！{}".format(args))
+        values = getElement(*args, **kwargs)
+        return self.wait.until(EC.presence_of_all_elements_located(values),
+                               message="查找多个元素失败！{}".format(values))
 
     """
     获取函数
@@ -63,16 +65,20 @@ class WebPage:
     @logger(msg="元素个数:{}")
     def get_num(self, locator):
         """获取相同元素的个数"""
-        values = getElement(locator)
-        number = len(self.find_elements(values))
+        number = len(self.find_elements(locator))
         return number
 
     @logger(msg="元素文本：{}")
     def get_text(self, locator, number=None):
         """获取当前的text"""
-        values = getElement(locator, number)
-        text = self.find_element(values).text
+        text = self.find_element(locator, number).text
         return text
+
+    @logger(msg="元素坐标：{}")
+    def get_location(self, locator, number=None):
+        """获取元素的坐标"""
+        location = self.find_element(locator, number).location
+        return location['x'], location['y']
 
     """判断函数"""
 
@@ -90,8 +96,7 @@ class WebPage:
         """元素是否可见"""
         try:
             values = getElement(locator, number)
-            WebDriverWait(self.driver, self.visible).until(
-                EC.visibility_of_element_located(values))
+            self.visible_obj.until(EC.visibility_of_element_located(values))
             return True
         except TimeoutException:
             return False
@@ -99,8 +104,7 @@ class WebPage:
     @logger
     def is_refresh(self, locator, number=None):
         """判断页面是否刷新"""
-        values = getElement(locator, number)
-        ele = self.find_element(values)
+        ele = self.find_element(locator, number)
         return EC.staleness_of(ele)
 
     @logger(msg="是否选中：{}")
@@ -132,8 +136,7 @@ class WebPage:
     @logger
     def clear(self, locator, number=None):
         """清空输入框"""
-        values = getElement(locator, number)
-        ele = self.find_element(values)
+        ele = self.find_element(locator, number)
         self.focus(ele)
         ele.clear()
         self.driver.implicitly_wait(1)
@@ -163,8 +166,7 @@ class WebPage:
     @logger
     def action_click(self, locator, number=None):
         """使用鼠标点击"""
-        values = getElement(locator, number)
-        element = self.find_element(values)
+        element = self.find_element(locator, number)
         self.focus(element)
         self.action.pause(0.5).click(element).pause(0.5).perform()
         self.driver.implicitly_wait(1)
@@ -172,8 +174,7 @@ class WebPage:
     @logger
     def action_input(self, locator, text, number=None):
         """action的输入方法"""
-        values = getElement(locator, number)
-        element = self.find_element(values)
+        element = self.find_element(locator, number)
         self.focus(element)
         self.action.pause(0.5).click(element).pause(0.5).send_keys(text)
         self.action.perform()
@@ -195,8 +196,7 @@ class WebPage:
     @logger
     def select_drop_down(self, locator, number=None):
         """选择下拉框"""
-        values = getElement(locator, number)
-        ele = self.find_element(values)
+        ele = self.find_element(locator, number)
         self.focus(ele)
         sleep(2)
         # 这里一定要加等待时间，否则会引起如下报错

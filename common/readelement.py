@@ -2,7 +2,7 @@
 # -*- coding:utf-8 -*-
 import os
 import yaml
-from config.conf import LOCATE_MODE
+from config.conf import cm
 
 
 class Element:
@@ -23,7 +23,7 @@ def getElement(locator, number=None):
     """获取元素"""
     pattern, value = locator.split("==")
     element_value = value % number if number else value
-    return LOCATE_MODE[pattern], element_value
+    return cm.LOCATE_MODE[pattern], element_value
 
 
 if __name__ == '__main__':

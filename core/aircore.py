@@ -2,11 +2,12 @@
 # -*- coding:utf-8 -*-
 from airtest.core.cv import Template
 from airtest.core.settings import Settings as ST
-from config.conf import SCREENSHOT_DIR
+
+from config.conf import cm
 from core.webpage import WebPage, sleep
 
 # 设置airtest日志目录
-ST.LOG_DIR = SCREENSHOT_DIR
+ST.LOG_DIR = cm.SCREENSHOT_DIR
 
 
 class AirtestMethod(WebPage):

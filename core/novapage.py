@@ -1,18 +1,17 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-import os
 import allure
 import base64
 from selenium.common.exceptions import TimeoutException
 
+from config.conf import cm
 from utils.times import *
 from utils.logger import logger
 from core.webpage import WebPage
-from config.conf import apps, SCREENSHOT_DIR
 from common.readelement import Element, getElement
 from utils.images import area_screenshot, get_image_name
 
-base = Element(apps['apps'], 'base')
+base = Element(cm.tests['tests'], 'base')
 
 
 class NovaPage(WebPage):
@@ -64,14 +63,12 @@ class NovaPage(WebPage):
         """
         截图保存为base64
         """
-        if not os.path.exists(SCREENSHOT_DIR):
-            os.makedirs(SCREENSHOT_DIR)
-        _now = datetime_strftime("%Y%m%d%H%M%S")
-        screen_path = os.path.join(SCREENSHOT_DIR, "{}.png".format(_now))
-        self.driver.save_screenshot(screen_path)
-        allure.attach.file(screen_path, "测试失败截图{}".format(
-            now_time()), allure.attachment_type.PNG)
-        with open(screen_path, 'rb') as f:
+        now_time, screen_file = cm.screen_path
+        self.driver.save_screenshot(screen_file)
+        allure.attach.file(screen_file,
+                           "测试失败截图{}".format(now_time),
+                           allure.attachment_type.PNG)
+        with open(screen_file, 'rb') as f:
             imagebase64 = base64.b64encode(f.read())
         return imagebase64.decode()
 

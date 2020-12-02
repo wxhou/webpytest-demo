@@ -6,7 +6,7 @@ import configparser
 HOST = 'HOST'
 
 
-class ReadConfig:
+class ReadConfig(object):
     """配置文件"""
 
     def __init__(self, route):

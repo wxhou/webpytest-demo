@@ -1,3 +1,5 @@
+cd ..
+
 source venv/bin/activate
 
 pytest --alluredir allure-results --clean-alluredir

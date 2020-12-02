@@ -1,10 +1,8 @@
 #!/usr/bin/env python3
 # -*- coding:utf-8 -*-
-import os
 import logging
 import functools
-from config.conf import LOG_PATH
-from utils.times import datetime_strftime
+from config.conf import cm
 
 
 class Logger:
@@ -14,7 +12,7 @@ class Logger:
             self.logger.setLevel(logging.INFO)
 
             # 创建一个handle写入文件
-            fh = logging.FileHandler(self.log_path, encoding='utf-8')
+            fh = logging.FileHandler(cm.log_path, encoding='utf-8')
             fh.setLevel(logging.INFO)
 
             # 创建一个handle输出到控制台
@@ -29,12 +27,6 @@ class Logger:
             # 添加到handle
             self.logger.addHandler(fh)
             self.logger.addHandler(ch)
-
-    @property
-    def log_path(self):
-        if not os.path.exists(LOG_PATH):
-            os.makedirs(LOG_PATH)
-        return os.path.join(LOG_PATH, '{}.log'.format(datetime_strftime()))
 
     @property
     def fmt(self):

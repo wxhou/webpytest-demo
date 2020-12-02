@@ -1,3 +1,7 @@
+cd ..
+
+venv\Script\activate
+
 call pytest --alluredir allure-results --clean-alluredir
 
 call allure generate allure-results -c -o allure-report

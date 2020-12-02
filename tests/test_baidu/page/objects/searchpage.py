@@ -1,12 +1,12 @@
 #!/usr/bin/env python3
 # -*- coding:utf-8 -*-
-from config.conf import element
+from config.conf import cm
 from utils.times import sleep
 from common.readelement import Element
-from apps.baidu.page import BasePage
+from tests.test_baidu.page import BasePage
 
-login = Element(element['baidu'], 'login')
-search = Element(element['baidu'], 'search')
+login = Element(cm.element['baidu'], 'login')
+search = Element(cm.element['baidu'], 'search')
 
 
 class SearchPage(BasePage):
@@ -14,12 +14,11 @@ class SearchPage(BasePage):
         """输入搜索"""
         self.input_text(search['搜索框'], text=content)
         sleep()
-
+        
     @property
     def imagine(self):
         """搜索联想"""
-        result_number = range(1, self.get_num(search['候选']) + 1)
-        return [self.get_text(search['搜索候选'], number=x) for x in result_number]
+        return [x.text for x in self.find_elements(search['搜索候选'])]
 
     def click_search(self):
         """点击搜索"""
@@ -38,4 +37,4 @@ class SearchPage(BasePage):
 
 
 if __name__ == '__main__':
-    print(login['密码'])
+    print(search['搜索候选'])

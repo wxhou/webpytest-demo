@@ -3,11 +3,11 @@
 import re
 import pytest
 import allure
+from config.conf import cm
 from utils.logger import log
 from common.readimage import get_image
 from core.aircore import AirtestMethod
-from config.conf import ini, airimages
-from apps.baidu.page.objects.searchpage import SearchPage
+from tests.test_baidu.page.objects.searchpage import SearchPage
 
 
 @allure.feature("测试百度模块")
@@ -17,8 +17,8 @@ class TestSearch:
         """打开百度"""
         search = SearchPage(drivers)
         airtest = AirtestMethod(drivers)
-        search.get_url(ini['baidu'].url)
-        airtest.assert_template(get_image(airimages['baidu'], "百度首页logo"))
+        search.get_url(cm.ini['baidu'].url)
+        airtest.assert_template(get_image(cm.airimages['baidu'], "百度首页logo"))
 
     @allure.story("搜索结果用例")
     @pytest.mark.parametrize("value", ["selenium", "你好"])
